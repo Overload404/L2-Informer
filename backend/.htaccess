@@ -1,4 +1,8 @@
 # remove .php from urls
 RewriteEngine On
-RewriteCond %{http://localhost/Tests/php_l2informer/} !-f
 RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+<Files "config.php">  
+  Order Allow,Deny
+  Deny from all
+</Files>
