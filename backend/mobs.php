@@ -15,9 +15,13 @@ $query .= "SELECT * FROM mobsnpcid ";
 if (isset($weakpoint)) {
     $query .= "INNER JOIN npcskills ON mobsnpcid.NPC_ID = npcskills.NPC_ID ";
 }
+
 $query .= "WHERE ";
+
 if (isset($type)) {
     $query .= "TYPE IN ($type) ";
+} else {
+    $query .= "1 ";
 }
 
 if (isset($name)) {
@@ -34,7 +38,7 @@ $total = 0;
 while ($row = $q->fetch()) {
     $total++;
 }
-// __print($total);
+__print($total);
 
 
 if (isset($page)) {
