@@ -38,7 +38,7 @@ $total = 0;
 while ($row = $q->fetch()) {
     $total++;
 }
-__print($total);
+// __print($total);
 
 
 if (isset($page)) {
@@ -47,7 +47,7 @@ if (isset($page)) {
     $query .= "LIMIT $a, $b";
 }
 
-__print($query);
+// __print($query);
 
 $q = $db->query($query);
 $response = [];
@@ -67,10 +67,10 @@ $result = [
 ];
 
 $result = json_encode($result);
-echo '<hr>';
+echo $result;
 
-$result = json_decode($result);
-foreach ($result->response as $value) {
-    __print($value->NPC_ID);
-}
-__print($result->pagination);
+// $result = json_decode($result);
+// foreach ($result->response as $value) {
+//     __print($value);
+// }
+// __print($result->pagination);
