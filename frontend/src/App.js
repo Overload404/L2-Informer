@@ -2,9 +2,9 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import InfiniteScroll from 'react-infinite-scroll-component';
 // import './App.css'
 import React, { useEffect,useState } from 'react'
-import MobList from './components/MobList';
-import DropTable from './components/DropTable';
-import SpoilTable from './components/SpoilTable';
+import MobList from './components/npcs/MobList';
+import DropTable from './components/npcs/DropSpoil/DropTable';
+import SpoilTable from './components/npcs/DropSpoil/SpoilTable';
 import Button from 'react-bootstrap/Button'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Container from 'react-bootstrap/Container'
@@ -15,8 +15,6 @@ import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
 function App() {
 
   const [mobs, setMobs] = useState([]);
-  const [drop, setDrop] = useState([]);
-  const [spoil, setSpoil] = useState([])
   const [mobListUrl, setMobListUrl] = useState('http://localhost:3001/allmobs/')
   const [mobListPage, setMobListPage] = useState(1)
   const [mobListTotal, setMobListTotal] = useState(0)
@@ -50,19 +48,7 @@ function App() {
     handleMoreMobs()
   }
 
-  const fetchDropHandler = async (targetID) => {
-    const drops =  await (await (fetch('http://localhost:3001/drop/npc/'+targetID))).json()
-    let dropList = await drops.response
-    const spoilList = []
-    dropList.forEach(async (item)=>{
-      if(item.CATEGORY < 0){
-        spoilList.push(item)
-      }
-    })
-    dropList = dropList.filter((item) => item.CATEGORY > -1)
-    setSpoil(spoilList)
-    setDrop(dropList)
-  }
+
   useEffect(()=> {
     fetchMobList(mobListUrl,mobListPage)
   },[mobListUrl])
@@ -122,12 +108,8 @@ function App() {
               next={fetchMoreMobs}
               hasMore={mobListTotal > mobs.length}
               loader={<h4>Loading...</h4>}>
-              <MobList onItemClick = {fetchDropHandler} onFilterChange={onFilterChange} mobs={mobs}/>
+              <MobList mobs={mobs}/>
               </InfiniteScroll>
-              <div className='dummyWrapper'>
-                <DropTable drop={drop}/>
-                <SpoilTable spoil={spoil}/>
-              </div>
             </div>
         </Container>
       </Col>

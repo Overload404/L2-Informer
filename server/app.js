@@ -9,6 +9,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(cors())
 
+PORT = 3001
 
 app.get('/npcs/:page', async (req,res)=> {
     let page = 1
@@ -102,6 +103,6 @@ app.get('/drop/npc/:id', async (req,res)=>{
 
 
 
-app.listen(3001, ()=>{
-    console.log('running on port 3001');
+app.listen(PORT, ()=>{
+    console.log(`running on port ${PORT}`);
 });
