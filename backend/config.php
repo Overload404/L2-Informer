@@ -1,5 +1,6 @@
 <?php
-
+// Include var_dump++
+require_once './tools.php';
 // Enable CORS from React 
 header("Access-Control-Allow-Origin: *");
 // DataBase connection
