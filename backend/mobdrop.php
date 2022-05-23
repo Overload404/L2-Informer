@@ -1,4 +1,4 @@
 <?php
 
-require_once './classes/MobDrop.php';
+require_once './core/MobDrop.php';
 print MobDrop::get_mobdrop();

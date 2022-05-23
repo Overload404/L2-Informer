@@ -1,6 +1,6 @@
 <?php
 
-require_once '../classes/MobDrop.php';
+require_once '../core/MobDrop.php';
 
 use PHPUnit\Framework\TestCase;
 

@@ -2,7 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 
-require_once '../classes/Mobs.php';
+require_once '../core/Mobs.php';
 
 class TestMobs extends TestCase
 {
