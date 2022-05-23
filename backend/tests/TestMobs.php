@@ -17,7 +17,7 @@ class TestMobs extends TestCase
     {
         $url = 'http://l2-informer/backend/mobs';
         $result = file_get_contents($url);
-        $response = file_get_contents('./TestMobs.json');
+        $response = file_get_contents('./files/test_mobs.json');
         $this->assertEquals($response, $result);
     }
 }
