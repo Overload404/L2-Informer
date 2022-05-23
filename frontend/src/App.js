@@ -25,7 +25,6 @@ function App() {
   const fetchMobList = (mobListUrl, mobListPage) => {
     fetch(`${mobListUrl}?page=${mobListPage}&type=${mobType}`)
       .then((response) => {
-        console.log(response);
         return response.json();
       })
       .then((data) => {
@@ -51,17 +50,16 @@ function App() {
   // }
 
   const handleMoreMobs = () => {
-    fetch(`${mobListUrl}${+mobListPage + 1}`)
+    fetch(`${mobListUrl}?page=${+mobListPage + 1}&type=${mobType}`)
       .then((response) => {
         return response.json();
       })
       .then((data) => {
-        setMobs((prevMobs) => prevMobs.concat(data.response.data));
-        setMobListPage(data.response.pagination.currentPage);
+        setMobs((prevMobs) => prevMobs.concat(data.response));
+        setMobListPage(data.pagination.currentPage);
       });
   };
   const fetchMoreMobs = () => {
-    console.log(mobListPage);
     handleMoreMobs();
   };
 
@@ -85,9 +83,6 @@ function App() {
   const NPCsHandler = () => {
     setMobListPage(1);
     setMobType(mobTypes.npcs);
-  };
-  const onFilterChange = (filterValue) => {
-    console.log(filterValue);
   };
 
   return (
