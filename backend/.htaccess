@@ -1,0 +1,8 @@
+# remove .php from urls
+RewriteEngine On
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+<Files "config.php">  
+  Order Allow,Deny
+  Deny from all
+</Files>
