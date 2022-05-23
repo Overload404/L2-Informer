@@ -5,8 +5,7 @@ class Mobs
     static function get_mobs()
     {
         require_once './config.php';
-        $per_page = 100;
-        $page = $_GET['page'] ?? 1;
+
         $type = $_GET['type'] ?? NULL;
         $weakpoint = $_GET['weakpoint'] ?? NULL;
         $name = $_GET['name'] ?? NULL;
