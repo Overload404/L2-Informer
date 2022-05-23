@@ -1,5 +1,7 @@
 <?php
 
+namespace classes;
+
 class Mobs
 {
     static function get_mobs()
