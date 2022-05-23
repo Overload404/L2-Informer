@@ -1,7 +1,5 @@
 <?php
 
-namespace classes;
-
 class Mobs
 {
     static function get_mobs()
@@ -56,19 +54,17 @@ class Mobs
         $from = ($total > 0) ? $a + 1  : 0;
         $to = ($a + $per_page < $total) ? $a + $per_page : $total;
 
-        if ($a + $per_page)
-            $result = [
-                'response' => $response,
-                'pagination' => [
-                    'total' => $total,
-                    'lastPage' => ceil($total / $per_page),
-                    'currentPage' => $page,
-                    'from' => $from,
-                    'to' => $to,
-                ],
-            ];
+        $result = [
+            'response' => $response,
+            'pagination' => [
+                'total' => $total,
+                'lastPage' => ceil($total / $per_page),
+                'currentPage' => $page,
+                'from' => $from,
+                'to' => $to,
+            ],
+        ];
 
-        $result = json_encode($result);
-        return  $result;
+        return json_encode($result);
     }
 }
