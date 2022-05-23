@@ -1,4 +1,48 @@
 <?php
+class General
+{
+    static function result_pagination($db, $query)
+    {
+        $per_page = 100;
+        $page = $_GET['page'] ?? 1;
+
+        $q = $db->query($query);
+        $total = 0;
+
+        while ($row = $q->fetch()) {
+            $total++;
+        }
+
+        if (isset($page)) {
+            $a = ($page - 1) * $per_page;
+            $b = $per_page;
+            $query .= "LIMIT $a, $b";
+        }
+
+        $q = $db->query($query);
+        $response = [];
+
+        while ($row = $q->fetch()) {
+            $response[] = $row;
+        }
+
+        $from = ($total > 0) ? $a + 1  : 0;
+        $to = ($a + $per_page < $total) ? $a + $per_page : $total;
+
+        $result = [
+            'response' => $response,
+            'pagination' => [
+                'total' => $total,
+                'lastPage' => ceil($total / $per_page),
+                'currentPage' => $page,
+                'from' => $from,
+                'to' => $to,
+            ],
+        ];
+
+        return json_encode($result);
+    }
+}
 
 class Mobs
 {
@@ -61,47 +105,13 @@ class MobDrop
     }
 }
 
-class General
+class Items
 {
-    static function result_pagination($db, $query)
+    static function get_items()
     {
-        $per_page = 100;
-        $page = $_GET['page'] ?? 1;
-
-        $q = $db->query($query);
-        $total = 0;
-
-        while ($row = $q->fetch()) {
-            $total++;
-        }
-
-        if (isset($page)) {
-            $a = ($page - 1) * $per_page;
-            $b = $per_page;
-            $query .= "LIMIT $a, $b";
-        }
-
-        $q = $db->query($query);
-        $response = [];
-
-        while ($row = $q->fetch()) {
-            $response[] = $row;
-        }
-
-        $from = ($total > 0) ? $a + 1  : 0;
-        $to = ($a + $per_page < $total) ? $a + $per_page : $total;
-
-        $result = [
-            'response' => $response,
-            'pagination' => [
-                'total' => $total,
-                'lastPage' => ceil($total / $per_page),
-                'currentPage' => $page,
-                'from' => $from,
-                'to' => $to,
-            ],
-        ];
-
-        return json_encode($result);
+        require_once './config.php';
+        $query = '';
+        $query .= "SELECT * FROM items ";
+        return General::result_pagination($db, $query);
     }
 }
