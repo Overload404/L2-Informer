@@ -7,3 +7,5 @@ $db = new PDO('sqlite:./data/main.db');
 $per_page = 100;
 // Default page is 1
 $page = $_GET['page'] ?? 1;
+// Include var_dump++
+require_once 'Tools.php';
