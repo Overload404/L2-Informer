@@ -1,1 +1,1 @@
-{"version":1,"defects":{"TestMobs::testMobsGeneral":3,"TestMobs::test_page_weakpoint":3},"times":{"TestMobs::testMobsGeneral":0.008,"TestMobs::test_page_weakpoint":0.033,"TestMobs::test_mobs":0.058}}
+{"version":1,"defects":{"TestMobs::testMobsGeneral":3,"TestMobs::test_page_weakpoint":3,"TestMobs::test_mobs":3},"times":{"TestMobs::testMobsGeneral":0.008,"TestMobs::test_page_weakpoint":0.008,"TestMobs::test_mobs":0.063}}
