@@ -4,7 +4,6 @@ class MobDrop
     static function get_mobdrop()
     {
         require_once './core/Config.php';
-
         $npcid = $_GET['npcid'] ?? NULL;
 
         $query = '';
@@ -15,7 +14,7 @@ class MobDrop
         WHERE ";
 
         if (isset($npcid)) {
-            $query .= "$npcid ";
+            $query .= "NPC_ID = $npcid ";
         } else {
             $query .= "1 ";
         }
@@ -25,6 +24,8 @@ class MobDrop
         while ($row = $q->fetch()) {
             $total++;
         }
+
+        __print($total);
 
         if (isset($page)) {
             $a = ($page - 1) * $per_page;
