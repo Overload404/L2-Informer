@@ -1,5 +1,6 @@
 import DropTable from "./DropSpoil/DropTable";
 import Card from "react-bootstrap/Card";
+import MobInfo from "./MobInfo/MobInfo";
 import Collapse from "react-bootstrap/Collapse";
 import CardGroup from "react-bootstrap/CardGroup";
 import Button from "react-bootstrap/Button";
@@ -9,11 +10,17 @@ const MobTable = (props) => {
   const [drop, setDrop] = useState([{ NAME: "Nothing" }]);
   const [spoil, setSpoil] = useState([]);
   const [clickedNPC, setClickedNPC] = useState("");
+  const [mobInfoNPC, setMobInfoNPC] = useState("");
 
-  const testHandler = (event) => {
-    setClickedNPC(event.target.id);
+  const handleModalClose = (emptyString) => setMobInfoNPC(emptyString);
+
+  const handleDropClose = () => {
+    setClickedNPC(clickedNPC);
   };
-
+  const mobInfoHandler = async (event) => {
+    event.persist();
+    setMobInfoNPC(await event.target.id);
+  };
   const fetchDropHandler = async (event) => {
     event.persist();
     let dropList = [];
@@ -47,7 +54,12 @@ const MobTable = (props) => {
     <div>
       <div className="mobTable">
         {props.mobs.map((mob) => (
-          <Card className="text-center m-4" key={mob.NPC_ID} id={mob.NPC_ID}>
+          <Card className="text-center m-1" key={mob.NPC_ID} id={mob.NPC_ID}>
+            <MobInfo
+              onModalExit={handleModalClose}
+              mob={mob}
+              mobInfoNPC={mobInfoNPC}
+            />
             <Card.Header>{mob.NPC_TITLE}</Card.Header>
             <Card.Body>
               <Card.Title>{mob.NPC_NAME}</Card.Title>
@@ -60,7 +72,12 @@ const MobTable = (props) => {
               >
                 Show Drop/Spoil
               </Button>
-              <Button variant="info" className="m-2" id={mob.NPC_ID}>
+              <Button
+                variant="info"
+                className="m-2"
+                id={mob.NPC_ID}
+                onClick={mobInfoHandler}
+              >
                 Info
               </Button>
               <Button variant="warning" className="m-2" id={mob.NPC_ID}>
@@ -68,7 +85,7 @@ const MobTable = (props) => {
               </Button>
             </Card.Body>
             <Collapse
-              in={clickedNPC == mob.NPC_ID}
+              in={clickedNPC === mob.NPC_ID}
               mountOnEnter={true}
               unmountOnExit={true}
               timeout={300}

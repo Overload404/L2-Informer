@@ -17,14 +17,19 @@ function App() {
   const [mobs, setMobs] = useState([]);
   const [mobListPage, setMobListPage] = useState(1);
   const [mobListTotal, setMobListTotal] = useState(0);
+  const [isVulnFilter, setIsVulnFilter] = useState(false);
+  const [vuln, setVuln] = useState("");
 
   let backEnd = "http://l2-informer/backend";
-  const [mobListUrl, setMobListUrl] = useState(`${backEnd}/mobs`);
+
+  const [mobListUrl, setMobListUrl] = useState(`${backEnd}/mobs?`);
   const [mobType, setMobType] = useState(mobTypes.all);
 
-  const fetchMobList = (mobListUrl, mobListPage) => {
-    fetch(`${mobListUrl}?page=${mobListPage}&type=${mobType}`)
+  const fetchMobList = () => {
+    fetch(`${mobListUrl}page=${mobListPage}&type=${mobType}`)
       .then((response) => {
+        let fullMobListUrl = `${mobListUrl}page=${mobListPage}&type=${mobType}`;
+        console.log(fullMobListUrl);
         return response.json();
       })
       .then((data) => {
@@ -50,7 +55,7 @@ function App() {
   // }
 
   const handleMoreMobs = () => {
-    fetch(`${mobListUrl}?page=${+mobListPage + 1}&type=${mobType}`)
+    fetch(`${mobListUrl}page=${+mobListPage + 1}&type=${mobType}`)
       .then((response) => {
         return response.json();
       })
@@ -59,12 +64,9 @@ function App() {
         setMobListPage(data.pagination.currentPage);
       });
   };
-  const fetchMoreMobs = () => {
-    handleMoreMobs();
-  };
 
   useEffect(() => {
-    fetchMobList(mobListUrl, mobListPage);
+    fetchMobList();
   }, [mobType]);
 
   const AllNPCsHandler = () => {
@@ -85,14 +87,23 @@ function App() {
     setMobType(mobTypes.npcs);
   };
 
+  const handleAllVuln = () => {
+    setIsVulnFilter(false);
+    setVuln("");
+  };
+  const handleFireVuln = () => {
+    setIsVulnFilter(true);
+    setVuln("4279");
+  };
+
   return (
     <Container>
       <Col className="container col-12">
         <h1 className="col-12">L2-Informer</h1>
-        <Container>
-          <ButtonToolbar>
-            <h5 className="d-flex align-self-center m-2">Type:</h5>
-            <ButtonGroup size="lg">
+        <Row className="p-2 justify-content-around  text-center">
+          <Col xs={3} className="border rounded dark pb-1">
+            <h5 className="m-2 justify-content-center">Type</h5>
+            <ButtonGroup>
               <Button onClick={AllNPCsHandler} variant="primary">
                 All
               </Button>
@@ -106,33 +117,39 @@ function App() {
                 NPC
               </Button>
             </ButtonGroup>
-            <h5 className="d-flex align-self-center m-2">Week To:</h5>
+          </Col>
+          <Col xs={8} className="border rounded p-1 pb-1">
+            <h5 className="m-2">Weak Point</h5>
             <ButtonGroup>
-              <Button>All</Button>
-              <Button>Bow</Button>
-              <Button>Blunt</Button>
-              <Button>Sword</Button>
-              <Button>Dagger</Button>
-              <Button>Dual Fist</Button>
-              <Button>Fire</Button>
-              <Button>Water</Button>
-              <Button>Wind</Button>
-              <Button>Earth</Button>
-              <Button>Dark</Button>
-              <Button>Holy</Button>
+              <Button variant="secondary" onClick={handleAllVuln}>
+                All
+              </Button>
+              <Button variant="secondary">Bow</Button>
+              <Button variant="secondary">Blunt</Button>
+              <Button variant="secondary">Sword</Button>
+              <Button variant="secondary">Dagger</Button>
+              <Button variant="secondary">Dual Fist</Button>
+              <Button variant="secondary" onClick={handleFireVuln}>
+                Fire
+              </Button>
+              <Button variant="secondary">Water</Button>
+              <Button variant="secondary">Wind</Button>
+              <Button variant="secondary">Earth</Button>
+              <Button variant="secondary">Dark</Button>
+              <Button variant="secondary">Holy</Button>
             </ButtonGroup>
-          </ButtonToolbar>
-          <div className="row flex-row mh-100">
-            <InfiniteScroll
-              dataLength={mobs.length}
-              next={fetchMoreMobs}
-              hasMore={mobListTotal > mobs.length}
-              loader={<h4>Loading...</h4>}
-            >
-              <MobList mobs={mobs} />
-            </InfiniteScroll>
-          </div>
-        </Container>
+          </Col>
+        </Row>
+        <div className="row flex-row mh-100">
+          <InfiniteScroll
+            dataLength={mobs.length}
+            next={handleMoreMobs}
+            hasMore={mobListTotal > mobs.length}
+            loader={<h4>Loading...</h4>}
+          >
+            <MobList mobs={mobs} />
+          </InfiniteScroll>
+        </div>
       </Col>
     </Container>
   );
