@@ -90,10 +90,10 @@ class MobDrop
 
         $query = '';
 
-        $query .= "SELECT DROPLIST.*, NAME 
-        FROM DROPLIST 
-        INNER JOIN ITEMS ON ITEMS.ITEM_ID = DROPLIST.ITEM_ID 
-        WHERE ";
+        $query .= "SELECT droplist.*, NAME,ICON 
+            FROM droplist 
+            INNER JOIN items ON (items.ITEM_ID = droplist.ITEM_ID) 
+            WHERE ";
 
         if (isset($npcid)) {
             $query .= "NPC_ID = $npcid ";
