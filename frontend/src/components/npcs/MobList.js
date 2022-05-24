@@ -26,8 +26,11 @@ const MobTable = (props) => {
     let dropList = [];
     try {
       const drops = await (
-        await fetch(`http://localhost:3001/drop/npc/${event.target.id}`)
+        await fetch(
+          `http://L2-Informer/backend/mobdrop?npcid=${event.target.id}`
+        )
       ).json();
+      console.log(drops);
       dropList = await drops.response;
       setClickedNPC(event.target.id);
     } catch {
