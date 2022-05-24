@@ -115,3 +115,27 @@ class Items
         return General::result_pagination($db, $query);
     }
 }
+
+class MobSkills
+{
+    static function get_mob_skills()
+    {
+        require_once './config.php';
+        $npcid = $_GET['npcid'] ?? NULL;
+
+        $query = '';
+
+        $query .= "SELECT npcskills.*, NAME, ICON 
+            FROM npcskills INNER JOIN skillnam 
+            ON (npcskills.SKILL_ID = skillnam.SKILL_ID 
+            AND npcskills.LEVEL = skillnam.LEVEL) WHERE ";
+
+        if (isset($npcid)) {
+            $query .= "NPC_ID = $npcid ";
+        } else {
+            $query .= "1 ";
+        }
+
+        return General::result_pagination($db, $query);
+    }
+}

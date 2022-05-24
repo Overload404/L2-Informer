@@ -43,4 +43,12 @@ class TestCore extends TestCase
         $response = file_get_contents('./files/test_items_page_7.json');
         $this->assertEquals($response, $result);
     }
+
+    function test_mobskills_npcid_18001()
+    {
+        $url = 'http://l2-informer/backend/mobskills?npcid=18001';
+        $result = file_get_contents($url);
+        $response = file_get_contents('./files/test_mobskills_npcid_18001.json');
+        $this->assertEquals($response, $result);
+    }
 }
