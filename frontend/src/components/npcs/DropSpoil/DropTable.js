@@ -1,4 +1,3 @@
-import Table from "react-bootstrap/Table";
 import ListGroup from "react-bootstrap/ListGroup";
 
 const DropTable = (props) => {
