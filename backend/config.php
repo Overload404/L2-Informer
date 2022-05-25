@@ -4,4 +4,4 @@ header("Access-Control-Allow-Origin: *");
 // DataBase connection
 $db = new PDO('sqlite:./data/main.db');
 // Include var_dump++
-require_once 'Tools.php';
+require_once './tools.php';
