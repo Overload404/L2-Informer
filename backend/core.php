@@ -18,7 +18,7 @@ class General
             $b = $per_page;
             $query .= "LIMIT $a, $b";
         }
-
+        // echo "<h1>$query</h1>";
         $q = $db->query($query);
         $response = [];
 
@@ -59,6 +59,8 @@ class Mobs
         $query .= "SELECT * FROM mobsnpcid ";
         if (isset($weakpoint)) {
             $query .= "INNER JOIN npcskills ON mobsnpcid.NPC_ID = npcskills.NPC_ID ";
+        } else {
+            $query .= "";
         }
 
         $query .= "WHERE ";
