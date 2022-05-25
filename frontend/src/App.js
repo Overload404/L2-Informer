@@ -1,155 +1,226 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import InfiniteScroll from "react-infinite-scroll-component";
 import mobTypes from "./components/npcs/mobTypes";
-// import './App.css'
 import React, { useEffect, useState } from "react";
 import MobList from "./components/npcs/MobList";
-import DropTable from "./components/npcs/DropSpoil/DropTable";
-import SpoilTable from "./components/npcs/DropSpoil/SpoilTable";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import ButtonToolbar from "react-bootstrap/ButtonToolbar";
+import linkBuilder from "./components/routes/routes";
+import Form from "react-bootstrap/Form";
 
 function App() {
   const [mobs, setMobs] = useState([]);
   const [mobListPage, setMobListPage] = useState(1);
   const [mobListTotal, setMobListTotal] = useState(0);
-  const [isVulnFilter, setIsVulnFilter] = useState(false);
-  const [vuln, setVuln] = useState("");
-
-  let backEnd = "http://l2-informer/backend";
-
-  const [mobListUrl, setMobListUrl] = useState(`${backEnd}/mobs?`);
+  const [weakpoint, setWeakpoint] = useState("");
+  const [name, setName] = useState("");
   const [mobType, setMobType] = useState(mobTypes.all);
 
   const fetchMobList = () => {
-    fetch(`${mobListUrl}page=${mobListPage}&type=${mobType}`)
+    fetch(
+      linkBuilder({
+        type: mobType,
+        page: mobListPage,
+        ep: "mobs",
+        weakpoint: weakpoint,
+        name: name,
+      })
+    )
       .then((response) => {
-        let fullMobListUrl = `${mobListUrl}page=${mobListPage}&type=${mobType}`;
-        console.log(fullMobListUrl);
         return response.json();
       })
       .then((data) => {
         setMobs(data.response);
-        setMobListPage(data.pagination.currentPage);
         setMobListTotal(data.pagination.total);
       });
   };
 
-  // let backEnd = 'http://localhost:3001'
-  // const [mobListUrl, setMobListUrl] = useState(`${backEnd}/allmobs`)
-  // const fetchMobList = (mobListUrl,mobListPage) => {
-  //   fetch(`${mobListUrl}/${mobListPage}`)
-  //   .then(response => {
-  //     console.log(response)
-  //     return response.json();
-  //   })
-  //   .then(data => {
-  //     setMobs(data.response.data)
-  //     setMobListPage(data.response.pagination.currentPage)
-  //     setMobListTotal(data.response.pagination.total)
-  //   })
-  // }
-
   const handleMoreMobs = () => {
-    fetch(`${mobListUrl}page=${+mobListPage + 1}&type=${mobType}`)
+    fetch(
+      linkBuilder({
+        type: mobType,
+        page: mobListPage + 1,
+        ep: "mobs",
+        weakpoint: weakpoint,
+      })
+    )
       .then((response) => {
+        console.log(
+          linkBuilder({
+            type: mobType,
+            page: mobListPage + 1,
+            ep: "mobs",
+            weakpoint: weakpoint,
+            name: name,
+          })
+        );
         return response.json();
       })
       .then((data) => {
         setMobs((prevMobs) => prevMobs.concat(data.response));
-        setMobListPage(data.pagination.currentPage);
+        setMobListPage(+data.pagination.currentPage);
       });
   };
 
   useEffect(() => {
+    setMobListPage(1);
     fetchMobList();
-  }, [mobType]);
+  }, [mobType, weakpoint, name]);
 
   const AllNPCsHandler = () => {
-    setMobListPage(1);
     setMobType(mobTypes.all);
   };
   const MobsHandler = () => {
-    setMobListPage(1);
     setMobType(mobTypes.mobs);
-    // setMobs(NPCs.filter(item => item.TYPE === 'L2Monster'))
   };
   const BossesHandler = () => {
-    setMobListPage(1);
     setMobType(mobTypes.bosses);
   };
   const NPCsHandler = () => {
-    setMobListPage(1);
     setMobType(mobTypes.npcs);
   };
 
-  const handleAllVuln = () => {
-    setIsVulnFilter(false);
-    setVuln("");
+  const handleAllWeakpoint = () => {
+    setWeakpoint("");
   };
-  const handleFireVuln = () => {
-    setIsVulnFilter(true);
-    setVuln("4279");
+
+  const handleFireWeakpoint = () => {
+    setWeakpoint("4279");
+  };
+
+  const handleBluntWeakpoint = () => {
+    setWeakpoint("4274");
+  };
+
+  const handleSacredWeakpoint = () => {
+    setWeakpoint("4275");
+  };
+
+  const handleBowWeakpoint = () => {
+    setWeakpoint("4276");
+  };
+  const handleWaterWeakpoint = () => {
+    setWeakpoint("4280");
+  };
+  const handleWindWeakpoint = () => {
+    setWeakpoint("4281");
+  };
+  const handleEarthWeakpoint = () => {
+    setWeakpoint("4282");
+  };
+  const handleDarkWeakpoint = () => {
+    setWeakpoint("4336");
+  };
+  const handleShockWeakpoint = () => {
+    setWeakpoint("4450");
+  };
+  const handleDualfistWeakpoint = () => {
+    setWeakpoint("4457");
+  };
+  const handleSpearWeakpoint = () => {
+    setWeakpoint("4458");
+  };
+  const handleSwordWeakpoint = () => {
+    setWeakpoint("4460");
+  };
+  const handleDaggerWeakpoint = () => {
+    setWeakpoint("4461");
+  };
+  const handleSearchByName = (event) => {
+    setName(event.target.value);
   };
 
   return (
-    <Container>
+    <Container className="bg-light rounded border">
       <Col className="container col-12">
-        <h1 className="col-12">L2-Informer</h1>
-        <Row className="p-2 justify-content-around  text-center">
-          <Col xs={3} className="border rounded dark pb-1">
-            <h5 className="m-2 justify-content-center">Type</h5>
-            <ButtonGroup>
-              <Button onClick={AllNPCsHandler} variant="primary">
-                All
-              </Button>
-              <Button onClick={MobsHandler} variant="primary">
-                Mobs
-              </Button>
-              <Button onClick={BossesHandler} variant="primary">
-                Bosses
-              </Button>
-              <Button onClick={NPCsHandler} variant="primary">
-                NPC
-              </Button>
-            </ButtonGroup>
-          </Col>
-          <Col xs={8} className="border rounded p-1 pb-1">
-            <h5 className="m-2">Weak Point</h5>
-            <ButtonGroup>
-              <Button variant="secondary" onClick={handleAllVuln}>
-                All
-              </Button>
-              <Button variant="secondary">Bow</Button>
-              <Button variant="secondary">Blunt</Button>
-              <Button variant="secondary">Sword</Button>
-              <Button variant="secondary">Dagger</Button>
-              <Button variant="secondary">Dual Fist</Button>
-              <Button variant="secondary" onClick={handleFireVuln}>
-                Fire
-              </Button>
-              <Button variant="secondary">Water</Button>
-              <Button variant="secondary">Wind</Button>
-              <Button variant="secondary">Earth</Button>
-              <Button variant="secondary">Dark</Button>
-              <Button variant="secondary">Holy</Button>
-            </ButtonGroup>
-          </Col>
-        </Row>
-        <div className="row flex-row mh-100">
-          <InfiniteScroll
-            dataLength={mobs.length}
-            next={handleMoreMobs}
-            hasMore={mobListTotal > mobs.length}
-            loader={<h4>Loading...</h4>}
-          >
-            <MobList mobs={mobs} />
-          </InfiniteScroll>
+        <h1 className="col-12 bg-light">L2-Informer</h1>
+        <div className="sticky-top border">
+          <Row className="p-2 justify-content-around  text-center bg-light">
+            <Col xs={3} className="border rounded dark pb-1">
+              <h5 className="m-2 justify-content-center">Type</h5>
+              <ButtonGroup>
+                <Button onClick={AllNPCsHandler} variant="primary">
+                  All
+                </Button>
+                <Button onClick={MobsHandler} variant="primary">
+                  Mobs
+                </Button>
+                <Button onClick={BossesHandler} variant="primary">
+                  Bosses
+                </Button>
+                <Button onClick={NPCsHandler} variant="primary">
+                  NPC
+                </Button>
+              </ButtonGroup>
+            </Col>
+            <Col xs={8} className="border rounded p-1 pb-1">
+              <h5 className="m-2">Weak Point</h5>
+              <ButtonGroup size="sm">
+                <Button variant="secondary" onClick={handleAllWeakpoint}>
+                  All
+                </Button>
+                <Button variant="secondary" onClick={handleBowWeakpoint}>
+                  Bow
+                </Button>
+                <Button variant="secondary" onClick={handleBluntWeakpoint}>
+                  Blunt
+                </Button>
+                <Button variant="secondary" onClick={handleSwordWeakpoint}>
+                  Sword
+                </Button>
+                <Button variant="secondary" onClick={handleSpearWeakpoint}>
+                  Spear
+                </Button>
+                <Button variant="secondary" onClick={handleDaggerWeakpoint}>
+                  Dagger
+                </Button>
+                <Button variant="secondary" onClick={handleDualfistWeakpoint}>
+                  Dual Fist
+                </Button>
+                <Button variant="secondary" onClick={handleFireWeakpoint}>
+                  Fire
+                </Button>
+                <Button variant="secondary" onClick={handleWaterWeakpoint}>
+                  Water
+                </Button>
+                <Button variant="secondary" onClick={handleWindWeakpoint}>
+                  Wind
+                </Button>
+                <Button variant="secondary" onClick={handleEarthWeakpoint}>
+                  Earth
+                </Button>
+                <Button variant="secondary" onClick={handleShockWeakpoint}>
+                  Shock
+                </Button>
+                <Button variant="secondary" onClick={handleDarkWeakpoint}>
+                  Dark
+                </Button>
+                <Button variant="secondary" onClick={handleSacredWeakpoint}>
+                  Sacred
+                </Button>
+              </ButtonGroup>
+            </Col>
+          </Row>
+          <Form>
+            <Form.Control
+              as="input"
+              type="text"
+              placeholder="Search..."
+              onChange={handleSearchByName}
+            />
+          </Form>
         </div>
+        <InfiniteScroll
+          dataLength={mobs.length}
+          next={handleMoreMobs}
+          hasMore={mobListTotal > mobs.length}
+          loader={<h4>Loading...</h4>}
+        >
+          <MobList mobs={mobs} />
+        </InfiniteScroll>
       </Col>
     </Container>
   );
