@@ -2,20 +2,18 @@ import DropTable from "./DropSpoil/DropTable";
 import Card from "react-bootstrap/Card";
 import MobInfo from "./MobInfo/MobInfo";
 import Collapse from "react-bootstrap/Collapse";
-import CardGroup from "react-bootstrap/CardGroup";
 import Button from "react-bootstrap/Button";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Container from "react-bootstrap/esm/Container";
 const MobTable = (props) => {
   const [drop, setDrop] = useState([{ NAME: "Nothing" }]);
   const [spoil, setSpoil] = useState([]);
   const [clickedNPC, setClickedNPC] = useState("");
   const [mobInfoNPC, setMobInfoNPC] = useState("");
-
   const handleModalClose = (emptyString) => setMobInfoNPC(emptyString);
 
   const handleDropClose = () => {
-    setClickedNPC(clickedNPC);
+    setClickedNPC("");
   };
   const mobInfoHandler = async (event) => {
     event.persist();
@@ -57,7 +55,12 @@ const MobTable = (props) => {
     <div>
       <div className="mobTable">
         {props.mobs.map((mob) => (
-          <Card className="text-center m-1" key={mob.NPC_ID} id={mob.NPC_ID}>
+          <Card
+            bg="secondary"
+            className="text-center m-1"
+            key={mob.NPC_ID}
+            id={mob.NPC_ID}
+          >
             <MobInfo
               onModalExit={handleModalClose}
               mob={mob}
@@ -70,7 +73,9 @@ const MobTable = (props) => {
               <Button
                 variant="success"
                 className="m-2"
-                onClick={fetchDropHandler}
+                onClick={
+                  clickedNPC !== mob.NPC_ID ? fetchDropHandler : handleDropClose
+                }
                 id={mob.NPC_ID}
               >
                 Show Drop/Spoil
@@ -97,7 +102,7 @@ const MobTable = (props) => {
                 <DropTable drop={drop} spoil={spoil} />
               </Container>
             </Collapse>
-            <Card.Footer className="text-muted" id={mob.NPC_ID}>
+            <Card.Footer className="text-muted-light" id={mob.NPC_ID}>
               ID: {mob.NPC_ID}
             </Card.Footer>
           </Card>

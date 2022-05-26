@@ -14,6 +14,7 @@ const DropTable = (props) => {
               key={drop.ID}
               itemID={drop.ITEM_ID}
               className="text-start"
+              variant="dark"
             >
               <p>
                 {" "}
@@ -31,6 +32,7 @@ const DropTable = (props) => {
               key={spoil.ID}
               itemID={spoil.ITEM_ID}
               className="text-start"
+              variant="dark"
             >
               <p>
                 {" "}

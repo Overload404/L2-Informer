@@ -132,13 +132,16 @@ function App() {
   const handleSearchByName = (event) => {
     setName(event.target.value);
   };
+  const preventDefault = (event) => {
+    event.preventDefault();
+  };
 
   return (
-    <Container className="bg-light rounded border">
+    <Container className="bg-dark text-light rounded border">
       <Col className="container col-12">
-        <h1 className="col-12 bg-light">L2-Informer</h1>
-        <div className="sticky-top border">
-          <Row className="p-2 justify-content-around  text-center bg-light">
+        <h1 className="col-12 bg-dark">L2-Informer</h1>
+        <div className="sticky-top">
+          <Row className="p-2 justify-content-around  text-center bg-dark">
             <Col xs={3} className="border rounded dark pb-1">
               <h5 className="m-2 justify-content-center">Type</h5>
               <ButtonGroup>
@@ -204,13 +207,19 @@ function App() {
               </ButtonGroup>
             </Col>
           </Row>
-          <Form>
-            <Form.Control
-              as="input"
-              type="text"
-              placeholder="Search..."
-              onChange={handleSearchByName}
-            />
+          <Form onSubmit={preventDefault} className="bg-dark rounded p-1">
+            <Row>
+              <Col xs={10}>
+                <Form.Control
+                  size="lg"
+                  as="input"
+                  type="text"
+                  placeholder="Search..."
+                  onChange={handleSearchByName}
+                />
+              </Col>
+              <Col xs={2}></Col>
+            </Row>
           </Form>
         </div>
         <InfiniteScroll
