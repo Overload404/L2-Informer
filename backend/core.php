@@ -141,3 +141,44 @@ class MobSkills
         return General::result_pagination($db, $query);
     }
 }
+
+class MobSpawn
+{
+    static function get_mob_spawn()
+    {
+        require_once './config.php';
+        $npcid = $_GET['npcid'] ?? NULL;
+
+        $query = '';
+
+        $query .= "SELECT * FROM mobsspawnlist WHERE ";
+
+        if (isset($npcid)) {
+            $query .= "mobsspawnlist.NPC_TEMPLA = $npcid ";
+        } else {
+            $query .= "1 ";
+        }
+
+        return General::result_pagination($db, $query);
+    }
+}
+class BossSpawn
+{
+    static function get_boss_spawn()
+    {
+        require_once './config.php';
+        $npcid = $_GET['npcid'] ?? NULL;
+
+        $query = '';
+
+        $query .= "SELECT * FROM raidspawn WHERE ";
+
+        if (isset($npcid)) {
+            $query .= "raidspawn.BOSS_ID = $npcid ";
+        } else {
+            $query .= "1 ";
+        }
+
+        return General::result_pagination($db, $query);
+    }
+}

@@ -51,4 +51,20 @@ class TestCore extends TestCase
         $response = file_get_contents('./files/test_mobskills_npcid_18001.json');
         $this->assertEquals($response, $result);
     }
+
+    function test_mobspawn_npcid_30080()
+    {
+        $url = 'http://l2-informer/backend/mobspawn?page=1&npcid=30080';
+        $result = file_get_contents($url);
+        $response = file_get_contents('./files/test_mobspawn_npcid_30080.json');
+        $this->assertEquals($response, $result);
+    }
+
+    function test_bossspawn_npcid_25372()
+    {
+        $url = 'http://l2-informer/backend/bossspawn?page=1&npcid=25372';
+        $result = file_get_contents($url);
+        $response = file_get_contents('./files/test_bossspawn_npcid_25372.json');
+        $this->assertEquals($response, $result);
+    }
 }
