@@ -3,11 +3,31 @@ import Col from "react-bootstrap/Col";
 import Modal from "react-bootstrap/Modal";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import Image from "react-bootstrap/Image";
+import { useState } from "react";
+import ListGroup from "react-bootstrap/ListGroup";
+import linkBuilder from "../../routes/routes";
 
 const MobInfo = (props) => {
   const modalExitHandle = () => {
     props.onModalExit("");
   };
+  const [mobSkills, setMobSkills] = useState([]);
+
+  const fetchMobSkills = () => {
+    fetch(
+      linkBuilder({
+        ep: "mobskills",
+        npcid: props.mob.NPC_ID,
+      })
+    )
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setMobSkills(data.response);
+      });
+  };
+
   return (
     <Modal
       backdrop={true}
@@ -15,6 +35,7 @@ const MobInfo = (props) => {
       size="xl"
       show={props.mob.NPC_ID === props.mobInfoNPC}
       keyboard={true}
+      onEnter={fetchMobSkills}
       onEscapeKeyDown={modalExitHandle}
       centered
       onHide={modalExitHandle}
@@ -85,7 +106,18 @@ const MobInfo = (props) => {
               label={`x ${(props.mob.EXP / props.mob.HP).toFixed(2)}`}
             />
           </Col>
-          <Col xs={4}></Col>
+          <Col xs={4}>
+            <ListGroup>
+              {mobSkills.map((skill) => (
+                <ListGroup.Item>
+                  <p>
+                    <Image src={`./images/${skill.ICON}`} /> lvl.{skill.LEVEL}{" "}
+                    {skill.NAME}
+                  </p>
+                </ListGroup.Item>
+              ))}
+            </ListGroup>
+          </Col>
         </Row>
       </Modal.Body>
     </Modal>

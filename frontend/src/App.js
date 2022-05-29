@@ -48,15 +48,6 @@ function App() {
       })
     )
       .then((response) => {
-        console.log(
-          linkBuilder({
-            type: mobType,
-            page: mobListPage + 1,
-            ep: "mobs",
-            weakpoint: weakpoint,
-            name: name,
-          })
-        );
         return response.json();
       })
       .then((data) => {

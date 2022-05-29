@@ -5,12 +5,17 @@ import Collapse from "react-bootstrap/Collapse";
 import Button from "react-bootstrap/Button";
 import { useState } from "react";
 import Container from "react-bootstrap/esm/Container";
+import MobMap from "./MobInfo/MobMap";
 const MobTable = (props) => {
   const [drop, setDrop] = useState([{ NAME: "Nothing" }]);
   const [spoil, setSpoil] = useState([]);
   const [clickedNPC, setClickedNPC] = useState("");
   const [mobInfoNPC, setMobInfoNPC] = useState("");
-  const handleModalClose = (emptyString) => setMobInfoNPC(emptyString);
+  const [mobMapNPC, setMobMapNPC] = useState("");
+  const handleModalClose = (emptyString) => {
+    setMobInfoNPC(emptyString);
+    setMobMapNPC(emptyString);
+  };
 
   const handleDropClose = () => {
     setClickedNPC("");
@@ -18,6 +23,11 @@ const MobTable = (props) => {
   const mobInfoHandler = async (event) => {
     event.persist();
     setMobInfoNPC(await event.target.id);
+  };
+
+  const mobMapHandler = async (event) => {
+    event.persist();
+    setMobMapNPC(await event.target.id);
   };
   const fetchDropHandler = async (event) => {
     event.persist();
@@ -66,6 +76,11 @@ const MobTable = (props) => {
               mob={mob}
               mobInfoNPC={mobInfoNPC}
             />
+            <MobMap
+              mob={mob}
+              mobMapNPC={mobMapNPC}
+              onModalExit={handleModalClose}
+            />
             <Card.Header>{mob.NPC_TITLE}</Card.Header>
             <Card.Body>
               <Card.Title>{mob.NPC_NAME}</Card.Title>
@@ -88,7 +103,12 @@ const MobTable = (props) => {
               >
                 Info
               </Button>
-              <Button variant="warning" className="m-2" id={mob.NPC_ID}>
+              <Button
+                variant="warning"
+                className="m-2"
+                id={mob.NPC_ID}
+                onClick={mobMapHandler}
+              >
                 Show On Map
               </Button>
             </Card.Body>
