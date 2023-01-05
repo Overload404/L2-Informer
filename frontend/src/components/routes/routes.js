@@ -3,6 +3,8 @@ const routes = {
   mobs: "mobs?",
   mobDrops: "mobdrop?",
   mobSkills: "mobskills?",
+  mobSpawn: "mobspawn?",
+  bossSpawn: "bossspawn?",
   items: "items?",
   name: "&name=",
   page: "page=",
@@ -25,6 +27,10 @@ const linkBuilder = ({ page, npcid, weakpoint, type, name, ep } = {}) => {
       ? routes.mobDrops
       : ep === "items"
       ? routes.items
+      : ep === "mobSpawn"
+      ? routes.mobSpawn
+      : ep === "bossSpawn"
+      ? routes.bossSpawn
       : ep === "mobskills"
       ? routes.mobSkills
       : "";
