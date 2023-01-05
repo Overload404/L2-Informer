@@ -2,6 +2,13 @@
 
 ## How to start frontend
 
+on first install:
+
+```
+cd ./frontend/
+npm install
+```
+after:
 ```
 cd ./frontend/
 npm start

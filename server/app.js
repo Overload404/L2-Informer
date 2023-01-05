@@ -14,7 +14,10 @@ PORT = 3001
 app.get('/npcs/:page', async (req,res)=> {
     let page = 1
     try{
-        page = + req.params.page
+        let tmp = parseInt(req.params.page)
+        if(Number.isInteger(tmp)){
+            page = + parseInt(req.params.page)
+        }  
     }
     catch{
         console.log('Something went wrong')
@@ -29,7 +32,10 @@ app.get('/npcs/:page', async (req,res)=> {
 app.get('/bosses/:page', async (req,res)=> {
     let page = 1
     try{
-        page = + req.params.page
+        let tmp = parseInt(req.params.page)
+        if(Number.isInteger(tmp)){
+            page = + parseInt(req.params.page)
+        }  
     }
     catch{
         console.log('Something went wrong')
@@ -59,7 +65,10 @@ app.get('/allmobs/:page', async (req,res)=> {
 app.get('/mobs/:page', async (req,res)=> {
     let page = 1
     try{
-        page = + req.params.page
+        let tmp = parseInt(req.params.page)
+        if(Number.isInteger(tmp)){
+            page = + parseInt(req.params.page)
+        }  
     }
     catch{
         console.log('Something went wrong')
