@@ -46,9 +46,7 @@ const MobTable = (props) => {
         )
       ).json();
       dropList = await drops.response;
-      console.log(dropList);
       setClickedNPC(event.target.id);
-      console.log(clickedNPC);
     } catch {
       console.log("Something went wrong");
     }
@@ -99,7 +97,7 @@ const MobTable = (props) => {
                 variant="success"
                 className="m-2"
                 onClick={
-                  clickedNPC !== mob.npc_id ? fetchDropHandler : handleDropClose
+                  clickedNPC != mob.npc_id ? fetchDropHandler : handleDropClose
                 }
                 id={mob.npc_id}
               >

@@ -1,5 +1,5 @@
 const routes = {
-  backendServer: "http://localhost:5000/",
+  backendServer: "http://127.0.0.1:5000/",
   mobs: "mobs?",
   mobDrop: "mobdrop?",
   mobSkills: "mobskills?",
