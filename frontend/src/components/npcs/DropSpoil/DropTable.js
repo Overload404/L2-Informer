@@ -3,7 +3,7 @@ import ListGroup from "react-bootstrap/ListGroup";
 const DropTable = (props) => {
   let dropExists = props.drop !== undefined && props.drop.length !== 0;
   let spoilExists = props.spoil !== undefined && props.drop.length !== 0;
-  console.log(props.spoil);
+  console.log(props.drop);
 
   return (
     <div>
@@ -11,34 +11,34 @@ const DropTable = (props) => {
         {dropExists &&
           props.drop.map((drop) => (
             <ListGroup.Item
-              key={drop.ID}
-              itemID={drop.ITEM_ID}
+              key={drop.id}
+              itemID={drop.item_id}
               className="text-start"
               variant="dark"
             >
               <p>
                 {" "}
                 <img
-                  src={`./images/${drop.ICON}`}
-                  alt={`${drop.NAME}`}
-                /> Drops {drop.MIN}-{drop.MAX} {drop.NAME} with a{" "}
-                {parseInt(drop.CHANCE) / 10000}% chance
+                  src={`./images/${drop.icon}`}
+                  alt={`${drop.name}`}
+                /> Drops {drop.min}-{drop.max} {drop.name} with a{" "}
+                {parseInt(drop.chance) / 10000}% chance
               </p>
             </ListGroup.Item>
           ))}
         {spoilExists &&
           props.spoil.map((spoil) => (
             <ListGroup.Item
-              key={spoil.ID}
-              itemID={spoil.ITEM_ID}
+              key={spoil.id}
+              itemID={spoil.item_id}
               className="text-start"
               variant="dark"
             >
               <p>
                 {" "}
-                <img src={`./images/${spoil.ICON}`} alt={`${spoil.NAME}`} /> Can
-                be spoiled for {spoil.MIN}-{spoil.MAX} {spoil.NAME} with a{" "}
-                {parseInt(spoil.CHANCE) / 10000}% chance
+                <img src={`./images/${spoil.icon}`} alt={`${spoil.name}`} /> Can
+                be spoiled for {spoil.min}-{spoil.max} {spoil.name} with a{" "}
+                {parseInt(spoil.chance) / 10000}% chance
               </p>
             </ListGroup.Item>
           ))}
@@ -55,13 +55,13 @@ const DropTable = (props) => {
           </thead>
           <tbody>
             {props.drop.map((drop) => (
-              <tr key={drop.ID} itemID={drop.ITEM_ID}>
-                <td id={drop.ITEM_ID}>{drop.NAME}</td>
-                <td id={drop.ITEM_ID}>
-                  {drop.MIN}-{drop.MAX}
+              <tr key={drop.id} itemID={drop.item_id}>
+                <td id={drop.item_id}>{drop.name}</td>
+                <td id={drop.item_id}>
+                  {drop.min}-{drop.max}
                 </td>
-                <td id={drop.ITEM_ID}>{parseInt(drop.CHANCE) / 10000}</td>
-                <td id={drop.ITEM_ID}>{drop.CATEGORY}</td>
+                <td id={drop.item_id}>{parseInt(drop.chance) / 10000}</td>
+                <td id={drop.item_id}>{drop.CATEGORY}</td>
               </tr>
             ))}
           </tbody>
@@ -81,12 +81,12 @@ const DropTable = (props) => {
             </thead>
             <tbody>
               {props.spoil.map((spoil) => (
-                <tr key={spoil.ID} itemID={spoil.ITEM_ID}>
-                  <td id={spoil.ITEM_ID}>{spoil.NAME}</td>
-                  <td id={spoil.ITEM_ID}>
-                    {spoil.MIN}-{spoil.MAX}
+                <tr key={spoil.id} itemID={spoil.item_id}>
+                  <td id={spoil.item_id}>{spoil.name}</td>
+                  <td id={spoil.item_id}>
+                    {spoil.min}-{spoil.max}
                   </td>
-                  <td id={spoil.ITEM_ID}>{parseInt(spoil.CHANCE) / 10000}</td>
+                  <td id={spoil.item_id}>{parseInt(spoil.chance) / 10000}</td>
                 </tr>
               ))}
             </tbody>

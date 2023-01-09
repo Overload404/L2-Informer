@@ -6,14 +6,17 @@ import Button from "react-bootstrap/Button";
 import { useState } from "react";
 import Container from "react-bootstrap/esm/Container";
 import MobMap from "./MobInfo/MobMap";
+import linkBuilder from "../routes/routes";
 const MobTable = (props) => {
-  const [drop, setDrop] = useState([{ NAME: "Nothing" }]);
+  const [drop, setDrop] = useState([{ name: "Nothing" }]);
   const [spoil, setSpoil] = useState([]);
   const [clickedNPC, setClickedNPC] = useState("");
   const [mobInfoNPC, setMobInfoNPC] = useState("");
   const [mobMapNPC, setMobMapNPC] = useState("");
-  const handleModalClose = (emptyString) => {
+  const handleInfoModalClose = (emptyString) => {
     setMobInfoNPC(emptyString);
+  };
+  const handleMapModalClose = (emptyString) => {
     setMobMapNPC(emptyString);
   };
 
@@ -23,6 +26,7 @@ const MobTable = (props) => {
   const mobInfoHandler = async (event) => {
     event.persist();
     setMobInfoNPC(await event.target.id);
+    console.log(clickedNPC);
   };
 
   const mobMapHandler = async (event) => {
@@ -35,30 +39,35 @@ const MobTable = (props) => {
     try {
       const drops = await (
         await fetch(
-          `http://L2-Informer/backend/mobdrop?npcid=${event.target.id}`
+          linkBuilder({
+            ep: "mobdrop",
+            npcid: event.target.id,
+          })
         )
       ).json();
-      console.log(drops);
       dropList = await drops.response;
+      console.log(dropList);
       setClickedNPC(event.target.id);
+      console.log(clickedNPC);
     } catch {
       console.log("Something went wrong");
     }
     const spoilList = [];
     dropList.forEach(async (item) => {
-      if (item.CATEGORY < 0) {
+      if (item.category < 0) {
         spoilList.push(item);
       }
     });
-    dropList = dropList.filter((item) => item.CATEGORY > -1);
+    dropList = dropList.filter((item) => item.category !== -1);
     if ((await dropList.length) === 0) {
-      setDrop([{ NAME: "Nothing" }]);
+      setDrop([{ name: "Nothing" }]);
     }
     if ((await spoilList.length) === 0) {
-      setSpoil([{ NAME: "Nothing" }]);
+      setSpoil([{ name: "Nothing" }]);
     }
     setSpoil(spoilList);
     setDrop(dropList);
+    console.log(clickedNPC);
   };
 
   return (
@@ -68,37 +77,38 @@ const MobTable = (props) => {
           <Card
             bg="secondary"
             className="text-center m-1"
-            key={mob.NPC_ID}
-            id={mob.NPC_ID}
+            key={mob.npc_id}
+            id={mob.npc_id}
           >
             <MobInfo
-              onModalExit={handleModalClose}
+              onModalExit={handleInfoModalClose}
               mob={mob}
               mobInfoNPC={mobInfoNPC}
+              onMapButton={setMobMapNPC}
             />
             <MobMap
               mob={mob}
               mobMapNPC={mobMapNPC}
-              onModalExit={handleModalClose}
+              onModalExit={handleMapModalClose}
             />
-            <Card.Header>{mob.NPC_TITLE}</Card.Header>
+            <Card.Header>{mob.npc_title}</Card.Header>
             <Card.Body>
-              <Card.Title>{mob.NPC_NAME}</Card.Title>
-              <Card.Text>Level: {mob.NPC_LEVEL}</Card.Text>
+              <Card.Title>{mob.npc_name}</Card.Title>
+              <Card.Text>Level: {mob.npc_level}</Card.Text>
               <Button
                 variant="success"
                 className="m-2"
                 onClick={
-                  clickedNPC !== mob.NPC_ID ? fetchDropHandler : handleDropClose
+                  clickedNPC !== mob.npc_id ? fetchDropHandler : handleDropClose
                 }
-                id={mob.NPC_ID}
+                id={mob.npc_id}
               >
                 Show Drop/Spoil
               </Button>
               <Button
                 variant="info"
                 className="m-2"
-                id={mob.NPC_ID}
+                id={mob.npc_id}
                 onClick={mobInfoHandler}
               >
                 Info
@@ -106,24 +116,24 @@ const MobTable = (props) => {
               <Button
                 variant="warning"
                 className="m-2"
-                id={mob.NPC_ID}
+                id={mob.npc_id}
                 onClick={mobMapHandler}
               >
                 Show On Map
               </Button>
             </Card.Body>
             <Collapse
-              in={clickedNPC === mob.NPC_ID}
+              in={clickedNPC == mob.npc_id}
               mountOnEnter={true}
               unmountOnExit={true}
-              timeout={300}
+              timeout={1000}
             >
               <Container>
                 <DropTable drop={drop} spoil={spoil} />
               </Container>
             </Collapse>
-            <Card.Footer className="text-muted-light" id={mob.NPC_ID}>
-              ID: {mob.NPC_ID}
+            <Card.Footer className="text-muted-light" id={mob.npc_id}>
+              ID: {mob.npc_id}
             </Card.Footer>
           </Card>
         ))}

@@ -10,8 +10,8 @@ function App() {
         <img
           src="./l2tldr-logo-dark-theme.png"
           alt="logo"
-          width={192}
-          height={192}
+          width={100}
+          height={100}
         />
       </h1>
       <MobTab />

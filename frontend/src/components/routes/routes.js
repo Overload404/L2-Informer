@@ -1,7 +1,7 @@
 const routes = {
-  backendServer: "http://l2-informer/backend/",
+  backendServer: "http://localhost:5000/",
   mobs: "mobs?",
-  mobDrops: "mobdrop?",
+  mobDrop: "mobdrop?",
   mobSkills: "mobskills?",
   mobSpawn: "mobspawn?",
   bossSpawn: "bossspawn?",
@@ -23,8 +23,8 @@ const linkBuilder = ({ page, npcid, weakpoint, type, name, ep } = {}) => {
   let epRequest =
     ep === "mobs"
       ? routes.mobs
-      : ep === "mobdrops"
-      ? routes.mobDrops
+      : ep === "mobdrop"
+      ? routes.mobDrop
       : ep === "items"
       ? routes.items
       : ep === "mobSpawn"

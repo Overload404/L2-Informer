@@ -10,7 +10,7 @@ import {
 } from "react-leaflet";
 import "../../../../node_modules/leaflet/dist/leaflet.css";
 import linkBuilder from "../../routes/routes";
-import { useEffect, useState, useRef } from "react";
+import { useState } from "react";
 
 const MobMap = (props) => {
   const modalExitHandle = () => {
@@ -23,7 +23,7 @@ const MobMap = (props) => {
       linkBuilder({
         ep: "mobSpawn",
         page: 1,
-        npcid: props.mob.NPC_ID,
+        npcid: props.mob.npc_id,
       })
     )
       .then((response) => {
@@ -39,7 +39,7 @@ const MobMap = (props) => {
               linkBuilder({
                 ep: "bossSpawn",
                 page: 1,
-                npcid: props.mob.NPC_ID,
+                npcid: props.mob.npc_id,
               })
             )
               .then((response) => {
@@ -55,26 +55,26 @@ const MobMap = (props) => {
   return (
     <Modal
       backdrop={true}
-      id={props.mob.NPC_ID}
+      id={props.mob.npc_id}
       size="xl"
       keyboard={true}
-      show={props.mob.NPC_ID === props.mobMapNPC}
+      show={props.mob.npc_id == props.mobMapNPC}
       onEnter={fetchSpawns}
       onEscapeKeyDown={modalExitHandle}
       centered
       onHide={modalExitHandle}
     >
-      <Modal.Header>
-        {props.mob.NPC_NAME} lvl.{props.mob.NPC_LEVEL}
+      <Modal.Header closeButton xs={4}>
+        {props.mob.npc_name} lvl.{props.mob.npc_level}
       </Modal.Header>
       <Modal.Body className="text-align-center">
         {spawns.length !== 0 ? (
           <MapContainer
             className="map"
             center={
-              spawns[0].LOCY
-                ? [-spawns[0].LOCY / 1000, +spawns[0].LOCX / 1000]
-                : [-spawns[0].LOC_Y / 1000, +spawns[0].LOC_X / 1000]
+              spawns[0].locy
+                ? [-spawns[0].locy / 1000, +spawns[0].locx / 1000]
+                : [-spawns[0].loc_y / 1000, +spawns[0].loc_x / 1000]
             }
             zoom={3}
             scrollWheelZoom={false}
@@ -94,16 +94,16 @@ const MobMap = (props) => {
               url="./images/world_map.jpg"
             />
             {spawns.map((spawn) =>
-              spawn.LOCY ? (
+              spawn.locy ? (
                 <CircleMarker
-                  key={+spawn.ID + Math.random()}
-                  center={[-spawn.LOCY / 1000, +spawn.LOCX / 1000]}
+                  key={+spawn.id + Math.random()}
+                  center={[-spawn.locy / 1000, +spawn.locx / 1000]}
                   radius={3}
                 />
               ) : (
                 <CircleMarker
-                  key={+spawn.BOSS_ID + Math.random()}
-                  center={[-spawn.LOC_Y / 1000, +spawn.LOC_X / 1000]}
+                  key={+spawn.id + Math.random()}
+                  center={[-spawn.loc_y / 1000, +spawn.loc_x / 1000]}
                   radius={3}
                 />
               )
