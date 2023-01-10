@@ -51,6 +51,8 @@ function MobTab() {
         ep: "mobs",
         weakpoint: weakpoint,
         name: name,
+        levelmin: levelmin,
+        levelmax: levelmax,
       })
     )
       .then((response) => {

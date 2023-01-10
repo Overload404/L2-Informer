@@ -14,9 +14,8 @@ function LevelBar(props) {
   };
 
   return (
-    <Col xs="auto" lg="2" md="auto" className="pb-1">
+    <Col xs="auto" lg="3" md="auto" className="pb-1">
       <h5 className="m-2">Level</h5>
-      <div className="custom-range">
         <ReactSlider
           className="custom-slider"
           onAfterChange={handleLevelRange}
@@ -33,79 +32,6 @@ function LevelBar(props) {
           pearling
           minDistance={0}
         />
-      </div>
-
-      {/* <Stack direction="horizontal">
-        <DropdownButton title={levelSel} className="btn-block" block="true">
-            <Dropdown.Item
-            variant="secondary"
-            onSelect={()=>handleLevelSelect(minlevel = 1, maxlevel = 10 )}
-            >
-            1 - 10
-            </Dropdown.Item>
-            <Dropdown.Item
-            variant="secondary"
-            onSelect={()=>handleLevelSelect(minlevel = 11, maxlevel = 20 )}
-            >
-            11 - 20
-            </Dropdown.Item>
-            <Dropdown.Item
-            variant="secondary"
-            onSelect={()=>handleLevelSelect(minlevel = 21, maxlevel = 30 )}
-            >
-            21 - 30
-            </Dropdown.Item>
-            <Dropdown.Item
-            variant="secondary"
-            onSelect={()=>handleLevelSelect(minlevel = 31, maxlevel = 40 )}
-            >
-            31 - 40
-            </Dropdown.Item>
-            <Dropdown.Item
-            variant="secondary"
-            onSelect={()=>handleLevelSelect(minlevel = 41, maxlevel = 50 )}
-            >
-            41 - 50
-            </Dropdown.Item>
-            <Dropdown.Item
-            variant="secondary"
-            onSelect={()=>handleLevelSelect(minlevel = 51, maxlevel = 60 )}
-            >
-            51 - 60
-            </Dropdown.Item>
-            <Dropdown.Item
-            variant="secondary"
-            onSelect={()=>handleLevelSelect(minlevel = 61, maxlevel = 70 )}
-            >
-            61 - 70
-            </Dropdown.Item>
-            <Dropdown.Item
-            variant="secondary"
-            onSelect={()=>handleLevelSelect(minlevel = 71, maxlevel = 80 )}
-            >
-            71 - 80
-            </Dropdown.Item>
-            <Dropdown.Item
-            variant="secondary"
-            onSelect={()=>handleLevelSelect(minlevel = 81, maxlevel = 90 )}
-            >
-            81 - 90
-            </Dropdown.Item>
-            <Dropdown.Item
-            variant="secondary"
-            onSelect={()=>handleLevelSelect(minlevel = 911, maxlevel = 100 )}
-            >
-            91 - 100
-            </Dropdown.Item>
-            <Dropdown.Item
-            variant="secondary"
-            onSelect={}
-            >
-            Custom
-            </Dropdown.Item>
-        </DropdownButton> */}
-
-      {/* </Stack> */}
     </Col>
   );
 }
