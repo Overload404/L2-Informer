@@ -9,6 +9,7 @@ import Row from "react-bootstrap/Row";
 import linkBuilder from "../routes/routes";
 import Form from "react-bootstrap/Form";
 import WeakpointBar from "./WeakpointBar";
+import LevelBar from "./LevelBar";
 
 function MobTab() {
   const [mobs, setMobs] = useState([]);
@@ -17,6 +18,8 @@ function MobTab() {
   const [weakpoint, setWeakpoint] = useState("");
   const [name, setName] = useState("");
   const [mobType, setMobType] = useState(mobTypes.all);
+  const [levelmin, setLevelMin] = useState("");
+  const [levelmax, setLevelMax] = useState("");
 
   const fetchMobList = () => {
     fetch(
@@ -26,6 +29,8 @@ function MobTab() {
         ep: "mobs",
         weakpoint: weakpoint,
         name: name,
+        levelmin: levelmin,
+        levelmax: levelmax,
       })
     )
       .then((response) => {
@@ -38,6 +43,7 @@ function MobTab() {
   };
 
   const handleMoreMobs = () => {
+    console.log(levelmin);
     fetch(
       linkBuilder({
         type: mobType,
@@ -59,7 +65,7 @@ function MobTab() {
   useEffect(() => {
     setMobListPage(1);
     fetchMobList();
-  }, [mobType, weakpoint, name]);
+  }, [mobType, weakpoint, name, levelmax, levelmin]);
 
   const AllNPCsHandler = () => {
     setMobType(mobTypes.all);
@@ -113,6 +119,10 @@ function MobTab() {
             </ButtonGroup>
           </Col>
           <WeakpointBar onWeakpointSelect={handleWeakpointBar} />
+          <LevelBar
+            onLevelMinChange={setLevelMin}
+            onLevelMaxChange={setLevelMax}
+          />
         </Row>
         <Form onSubmit={preventDefault} className="bg-dark rounded p-1">
           <Row>

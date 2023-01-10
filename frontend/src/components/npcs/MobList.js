@@ -71,70 +71,76 @@ const MobTable = (props) => {
   return (
     <div>
       <div className="mobTable">
-        {props.mobs.map((mob) => (
-          <Card
-            bg="secondary"
-            className="text-center m-1"
-            key={mob.npc_id}
-            id={mob.npc_id}
-          >
-            <MobInfo
-              onModalExit={handleInfoModalClose}
-              mob={mob}
-              mobInfoNPC={mobInfoNPC}
-              onMapButton={setMobMapNPC}
-            />
-            <MobMap
-              mob={mob}
-              mobMapNPC={mobMapNPC}
-              onModalExit={handleMapModalClose}
-            />
-            <Card.Header>{mob.npc_title}</Card.Header>
-            <Card.Body>
-              <Card.Title>{mob.npc_name}</Card.Title>
-              <Card.Text>Level: {mob.npc_level}</Card.Text>
-              <Button
-                variant="success"
-                className="m-2"
-                onClick={
-                  clickedNPC != mob.npc_id ? fetchDropHandler : handleDropClose
-                }
-                id={mob.npc_id}
-              >
-                Show Drop/Spoil
-              </Button>
-              <Button
-                variant="info"
-                className="m-2"
-                id={mob.npc_id}
-                onClick={mobInfoHandler}
-              >
-                Info
-              </Button>
-              <Button
-                variant="warning"
-                className="m-2"
-                id={mob.npc_id}
-                onClick={mobMapHandler}
-              >
-                Show On Map
-              </Button>
-            </Card.Body>
-            <Collapse
-              in={clickedNPC == mob.npc_id}
-              mountOnEnter={true}
-              unmountOnExit={true}
-              timeout={1000}
+        {props.mobs.length == 0 ? (
+          <h3 className="text-center m-5">No NPCs matching your request.</h3>
+        ) : (
+          props.mobs.map((mob) => (
+            <Card
+              bg="secondary"
+              className="text-center m-1"
+              key={mob.npc_id}
+              id={mob.npc_id}
             >
-              <Container>
-                <DropTable drop={drop} spoil={spoil} />
-              </Container>
-            </Collapse>
-            <Card.Footer className="text-muted-light" id={mob.npc_id}>
-              ID: {mob.npc_id}
-            </Card.Footer>
-          </Card>
-        ))}
+              <MobInfo
+                onModalExit={handleInfoModalClose}
+                mob={mob}
+                mobInfoNPC={mobInfoNPC}
+                onMapButton={setMobMapNPC}
+              />
+              <MobMap
+                mob={mob}
+                mobMapNPC={mobMapNPC}
+                onModalExit={handleMapModalClose}
+              />
+              <Card.Header>{mob.npc_title}</Card.Header>
+              <Card.Body>
+                <Card.Title>{mob.npc_name}</Card.Title>
+                <Card.Text>Level: {mob.npc_level}</Card.Text>
+                <Button
+                  variant="success"
+                  className="m-2"
+                  onClick={
+                    clickedNPC != mob.npc_id
+                      ? fetchDropHandler
+                      : handleDropClose
+                  }
+                  id={mob.npc_id}
+                >
+                  Show Drop/Spoil
+                </Button>
+                <Button
+                  variant="info"
+                  className="m-2"
+                  id={mob.npc_id}
+                  onClick={mobInfoHandler}
+                >
+                  Info
+                </Button>
+                <Button
+                  variant="warning"
+                  className="m-2"
+                  id={mob.npc_id}
+                  onClick={mobMapHandler}
+                >
+                  Show On Map
+                </Button>
+              </Card.Body>
+              <Collapse
+                in={clickedNPC == mob.npc_id}
+                mountOnEnter={true}
+                unmountOnExit={true}
+                timeout={1000}
+              >
+                <Container>
+                  <DropTable drop={drop} spoil={spoil} />
+                </Container>
+              </Collapse>
+              <Card.Footer className="text-muted-light" id={mob.npc_id}>
+                ID: {mob.npc_id}
+              </Card.Footer>
+            </Card>
+          ))
+        )}
       </div>
     </div>
   );

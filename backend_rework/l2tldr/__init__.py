@@ -5,10 +5,7 @@ app = Flask(__name__)
 cors= CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-while conn.closed != 0:
-    with conn.cursor() as cur:
-        cur.execute('select 1')
-
+    
 import l2tldr.routes.mobs
 import l2tldr.routes.mobdrop
 import l2tldr.routes.mobskills

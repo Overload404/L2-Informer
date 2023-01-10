@@ -117,7 +117,7 @@ const MobInfo = (props) => {
               rounded
             />
             <h6>Experience compared to HP:</h6>
-            <textrogressBar
+            <ProgressBar
               className="w-100"
               striped
               now={(props.mob.exp / props.mob.hp / 6) * 100}

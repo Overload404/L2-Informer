@@ -11,15 +11,30 @@ const routes = {
   weakpoint: "&weakpoint=",
   type: "&type=",
   npcid: "&npcid=",
+  levelmin: "&levelmin=",
+  levelmax: "&levelmax=",
 };
 
-const linkBuilder = ({ page, npcid, weakpoint, type, name, ep } = {}) => {
+const linkBuilder = ({
+  page,
+  npcid,
+  weakpoint,
+  type,
+  name,
+  ep,
+  levelmin,
+  levelmax,
+} = {}) => {
   let pageRequest = !page || page === "" ? "" : `${routes.page}${page}`;
   let typeRequest = !type || type === "" ? "" : `${routes.type}${type}`;
   let weakpointRequest =
     !weakpoint || weakpoint === "" ? "" : `${routes.weakpoint}${weakpoint}`;
   let nameRequest = !name || name === "" ? "" : `${routes.name}${name}`;
   let npcidRequest = !npcid || npcid === "" ? "" : `${routes.npcid}${npcid}`;
+  let levelminRequest =
+    !levelmin || levelmin === "" ? "" : `${routes.levelmin}${levelmin}`;
+  let levelmaxRequest =
+    !levelmax || levelmax === "" ? "" : `${routes.levelmax}${levelmax}`;
   let epRequest =
     ep === "mobs"
       ? routes.mobs
@@ -35,7 +50,7 @@ const linkBuilder = ({ page, npcid, weakpoint, type, name, ep } = {}) => {
       ? routes.mobSkills
       : "";
 
-  let URL = `${routes.backendServer}${epRequest}${pageRequest}${weakpointRequest}${npcidRequest}${nameRequest}${typeRequest}`;
+  let URL = `${routes.backendServer}${epRequest}${pageRequest}${weakpointRequest}${npcidRequest}${nameRequest}${typeRequest}${levelminRequest}${levelmaxRequest}`;
   return URL;
 };
 

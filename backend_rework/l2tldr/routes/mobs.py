@@ -19,6 +19,8 @@ def getmobs():
     # same as above, but defaults "page" to 0
     page = int(request.args.get("page"))-1 if ("page" in request.args) else 0
     offset = page*limit
+    level_min = None if "levelmin" not in request.args or request.args.get("levelmin")=="" else request.args.get("levelmin")
+    level_max = None if "levelmax" not in request.args or request.args.get("levelmax")=="" else request.args.get("levelmax")
 
     # build query based on params
     query = "SELECT * FROM mobsnpcid" 
@@ -30,8 +32,15 @@ def getmobs():
         query += f" AND LOWER(NPC_NAME) LIKE LOWER('%{name}%')"
     if weakpoint!=None:
         query += f" AND SKILL_ID = {weakpoint}"
+    if level_min!=None:
+        query += f" AND (npc_level >= {level_min})"
+    if level_max!=None:
+        query += f" AND (npc_level <= {level_max})"
+    
     if page!=None:
         query += f" LIMIT {limit} OFFSET {offset}"
+
+    print(query)
     
     total_rows_query = "SELECT COUNT('id') FROM mobsnpcid INNER JOIN npcskills ON mobsnpcid.NPC_ID = npcskills.NPC_ID" 
     if mobtype!=None:
@@ -40,6 +49,10 @@ def getmobs():
         total_rows_query += f" AND LOWER(NPC_NAME) LIKE LOWER('%{name}%')"
     if weakpoint!=None:
         total_rows_query += f" AND SKILL_ID = {weakpoint}"
+    if level_min!=None:
+        total_rows_query += f" AND npc_level >= {level_min}"
+    if level_max!=None:
+        total_rows_query += f" AND npc_level <= {level_max}"
     
     # run query
     with conn.cursor() as cur:
