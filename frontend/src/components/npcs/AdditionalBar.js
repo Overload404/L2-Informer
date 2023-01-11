@@ -11,7 +11,7 @@ function AdditionalBar(props) {
   };
 
   return (
-    <Col xs="auto" lg="2" md="auto" className="pb-1">
+    <Col xs="auto" lg="3" md="auto" className="pb-1">
       <h5 className="m-2">Additional</h5>
       <Row className="w-100">
         <Col xs="auto" className="align-self-center">
