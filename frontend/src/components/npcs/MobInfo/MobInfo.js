@@ -51,9 +51,9 @@ const MobInfo = (props) => {
       onHide={modalExitHandle}
     >
       <Modal.Header closeButton xs={4}>
-        <text>
-          {props.mob.npc_name} (LVL: {props.mob.npc_level})
-        </text>
+        <p className="align-self-end">
+          {props.mob.npc_name} - lvl.{props.mob.npc_level}
+        </p>
         <Button
           variant="warning"
           className="m-2"
@@ -65,46 +65,63 @@ const MobInfo = (props) => {
       </Modal.Header>
       <Modal.Body className="show-grid">
         <Row className="justify-content d-flex flex-wrap">
-          <Col className="d-flex flex-column align-items-center">
+          <Col
+            Col
+            xs={12}
+            lg={4}
+            className="d-flex flex-column align-items-center"
+          >
             <h6>Main Stats</h6>
             <Row className="justify-content-between border rounded w-100">
               <Col xs={6} className="d-flex flex-column align-items-center">
-                <text className="text-danger">HP:{props.mob.hp}</text>
-                <text className="text-primary">MP:{props.mob.mp}</text>
+                <p className="text-danger">HP:{props.mob.hp}</p>
+                <p className="text-primary">MP:{props.mob.mp}</p>
               </Col>
               <Col xs={6} className="d-flex flex-column align-items-center">
-                <text className="text-success">EXP:{props.mob.exp}</text>
-                <text className="text-success">SP:{props.mob.SP}</text>
+                <p className="text-success">EXP:{props.mob.exp}</p>
+                <p className="text-success">SP:{props.mob.sp}</p>
               </Col>
             </Row>
             <h6>Combat Stats</h6>
-            <Row className="justify-content-between border rounded w-100">
+            <Row
+              xs={12}
+              className="justify-content-between border rounded w-100"
+            >
               <Col xs={6} className="d-flex flex-column align-items-center">
-                <text>P.Atk:{props.mob.patk}</text>
-                <text>M.Atk:{props.mob.matk}</text>
-                <text>Atk.Speed:{props.mob.atkspd}</text>
+                <p>P.Atk:{props.mob.patk}</p>
+                <p>M.Atk:{props.mob.matk}</p>
+                <p>Atk.Speed:{props.mob.atkspd}</p>
               </Col>
               <Col xs={6} className="d-flex flex-column">
-                <text>P.Def:{props.mob.pdef}</text>
-                <text>M.Def:{props.mob.mdef}</text>
-                <text>Mv.Speed:{props.mob.runspd}</text>
+                <p>P.Def:{props.mob.pdef}</p>
+                <p>M.Def:{props.mob.mdef}</p>
+                <p>Mv.Speed:{props.mob.runspd}</p>
               </Col>
             </Row>
             <h6>Combat Stats</h6>
-            <Row className="justify-content-between border rounded w-100">
+            <Row
+              xs={12}
+              className="justify-content-between border rounded w-100"
+            >
               <Col xs={6} className="d-flex flex-column align-items-center">
-                <text>STR:{props.mob.str}</text>
-                <text>CON:{props.mob.con}</text>
-                <text>DEX:{props.mob.dex}</text>
+                <p>STR:{props.mob.str}</p>
+                <p>CON:{props.mob.con}</p>
+                <p>DEX:{props.mob.dex}</p>
               </Col>
               <Col xs={6} className="d-flex flex-column align-items-center">
-                <text>INT:{props.mob.int}</text>
-                <text>WIT:{props.mob.wit}</text>
-                <text>MEN:{props.mob.men}</text>
+                <p>INT:{props.mob.int}</p>
+                <p>WIT:{props.mob.wit}</p>
+                <p>MEN:{props.mob.men}</p>
               </Col>
             </Row>
           </Col>
-          <Col className="d-flex flex-column align-items-center">
+          <Col
+            Col
+            xs={12}
+            md="auto"
+            lg={4}
+            className="d-flex flex-column align-items-center"
+          >
             <Image
               src={`./images/npcs/${props.mob.npc_id}.jpg`}
               alt={`${props.mob.npc_name} lvl: ${props.mob.npc_level}`}
@@ -116,24 +133,47 @@ const MobInfo = (props) => {
               }}
               rounded
             />
-            <h6>Experience compared to HP:</h6>
+            <h6>EXP Efficiency:</h6>
             <ProgressBar
               className="w-100"
               striped
               now={(props.mob.exp / props.mob.hp / 6) * 100}
               label={`x ${(props.mob.exp / props.mob.hp).toFixed(2)}`}
             />
+
+            <br />
+            <h6> Misc. </h6>
+            <Row className="justify-content-between border rounded w-100">
+              <Col xs={12} className="d-flex flex-column align-items-center">
+                <p>NPC ID:{props.mob.npc_id}</p>
+                <p>
+                  Aggro:{" "}
+                  {props.mob.aggro === 0 ? (
+                    <span className="text-success">Passive</span>
+                  ) : (
+                    <span className="text-danger"> Agressive </span>
+                  )}
+                </p>
+                <p>Faction:{props.faction_id}</p>
+              </Col>
+            </Row>
           </Col>
-          <Col>
-            <ListGroup>
+          <Col
+            xs={12}
+            md="auto"
+            lg={4}
+            className="d-flex flex-column align-items-center"
+          >
+            <h6>Skills</h6>
+            <ListGroup className="skill-list">
               {mobSkills.map((skill) => (
                 <ListGroup.Item key={skill.id}>
                   <Stack direction="horizontal" gap={2}>
-                    <Image src={`./images/${skill.icon}`} />{" "}
+                    <Image rounded="true" src={`./images/${skill.icon}`} />{" "}
                     <div className="vr" />
-                    <text>lvl.{skill.level}</text>
+                    <p>lvl.{skill.level}</p>
                     <div className="vr" />
-                    <text>{skill.name}</text>
+                    <p>{skill.name}</p>
                   </Stack>
                 </ListGroup.Item>
               ))}

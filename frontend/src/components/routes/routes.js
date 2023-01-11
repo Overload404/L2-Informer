@@ -13,6 +13,8 @@ const routes = {
   npcid: "&npcid=",
   levelmin: "&levelmin=",
   levelmax: "&levelmax=",
+  isundead: "&isundead=",
+  notonmap: "&notonmap=",
 };
 
 const linkBuilder = ({
@@ -24,6 +26,8 @@ const linkBuilder = ({
   ep,
   levelmin,
   levelmax,
+  isundead,
+  notonmap,
 } = {}) => {
   let pageRequest = !page || page === "" ? "" : `${routes.page}${page}`;
   let typeRequest = !type || type === "" ? "" : `${routes.type}${type}`;
@@ -35,6 +39,10 @@ const linkBuilder = ({
     !levelmin || levelmin === "" ? "" : `${routes.levelmin}${levelmin}`;
   let levelmaxRequest =
     !levelmax || levelmax === "" ? "" : `${routes.levelmax}${levelmax}`;
+  let isundeadRequest =
+    !isundead || isundead === "" ? "" : `${routes.isundead}${isundead}`;
+  let notonmapRequest =
+    !notonmap || notonmap === "" ? "" : `${routes.notonmap}${notonmap}`;
   let epRequest =
     ep === "mobs"
       ? routes.mobs
@@ -50,7 +58,7 @@ const linkBuilder = ({
       ? routes.mobSkills
       : "";
 
-  let URL = `${routes.backendServer}${epRequest}${pageRequest}${weakpointRequest}${npcidRequest}${nameRequest}${typeRequest}${levelminRequest}${levelmaxRequest}`;
+  let URL = `${routes.backendServer}${epRequest}${pageRequest}${weakpointRequest}${npcidRequest}${nameRequest}${typeRequest}${levelminRequest}${levelmaxRequest}${isundeadRequest}${notonmapRequest}`;
   return URL;
 };
 

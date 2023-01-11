@@ -7,6 +7,7 @@ import { useState } from "react";
 import Container from "react-bootstrap/esm/Container";
 import MobMap from "./MobInfo/MobMap";
 import linkBuilder from "../routes/routes";
+import Stack from "react-bootstrap/Stack";
 const MobTable = (props) => {
   const [drop, setDrop] = useState([{ name: "Nothing" }]);
   const [spoil, setSpoil] = useState([]);
@@ -76,8 +77,9 @@ const MobTable = (props) => {
         ) : (
           props.mobs.map((mob) => (
             <Card
-              bg="secondary"
-              className="text-center m-1"
+              bg="light"
+              text="dark"
+              className="m-1"
               key={mob.npc_id}
               id={mob.npc_id}
             >
@@ -91,39 +93,45 @@ const MobTable = (props) => {
                 mob={mob}
                 mobMapNPC={mobMapNPC}
                 onModalExit={handleMapModalClose}
+                onInfoButton={setMobInfoNPC}
               />
-              <Card.Header>{mob.npc_title}</Card.Header>
-              <Card.Body>
-                <Card.Title>{mob.npc_name}</Card.Title>
-                <Card.Text>Level: {mob.npc_level}</Card.Text>
-                <Button
-                  variant="success"
-                  className="m-2"
-                  onClick={
-                    clickedNPC != mob.npc_id
-                      ? fetchDropHandler
-                      : handleDropClose
-                  }
-                  id={mob.npc_id}
-                >
-                  Show Drop/Spoil
-                </Button>
-                <Button
-                  variant="info"
-                  className="m-2"
-                  id={mob.npc_id}
-                  onClick={mobInfoHandler}
-                >
-                  Info
-                </Button>
-                <Button
-                  variant="warning"
-                  className="m-2"
-                  id={mob.npc_id}
-                  onClick={mobMapHandler}
-                >
-                  Show On Map
-                </Button>
+              <Card.Body className="d-flex justify-content-between">
+                <div className="w-50 justify-self-start hstack">
+                  <span className="h5 m-2 font-weight-bold justify-self-center">
+                    {mob.npc_name}
+                  </span>
+                  <span className="ms-auto">Level: {mob.npc_level}</span>
+                </div>
+                <div className="justify-self-end">
+                  <Button
+                    variant="success"
+                    className="m-2"
+                    onClick={
+                      clickedNPC != mob.npc_id
+                        ? fetchDropHandler
+                        : handleDropClose
+                    }
+                    id={mob.npc_id}
+                  >
+                    Show Drop/Spoil
+                  </Button>
+                  <Button
+                    variant="info"
+                    className="m-2"
+                    id={mob.npc_id}
+                    onClick={mobInfoHandler}
+                  >
+                    Info
+                  </Button>
+                  <Button
+                    variant="warning"
+                    className="m-2"
+                    id={mob.npc_id}
+                    onClick={mobMapHandler}
+                  >
+                    Show On Map
+                  </Button>
+                </div>
               </Card.Body>
               <Collapse
                 in={clickedNPC == mob.npc_id}
@@ -135,9 +143,9 @@ const MobTable = (props) => {
                   <DropTable drop={drop} spoil={spoil} />
                 </Container>
               </Collapse>
-              <Card.Footer className="text-muted-light" id={mob.npc_id}>
+              {/* <Card.Footer className="text-muted-light" id={mob.npc_id}>
                 ID: {mob.npc_id}
-              </Card.Footer>
+              </Card.Footer> */}
             </Card>
           ))
         )}

@@ -11,12 +11,21 @@ import {
 import "../../../../node_modules/leaflet/dist/leaflet.css";
 import linkBuilder from "../../routes/routes";
 import { useState } from "react";
+import Button from "react-bootstrap/Button";
 
 const MobMap = (props) => {
   const modalExitHandle = () => {
     props.onModalExit("");
   };
   const [spawns, setSpawns] = useState([]);
+
+  const modalExitFunction = props.onModalExit;
+  const infoButtonFunction = props.onInfoButton;
+
+  const onInfoBtnClick = (props) => {
+    infoButtonFunction(props.target.id);
+    modalExitFunction("");
+  };
 
   const fetchSpawns = () => {
     fetch(
@@ -65,7 +74,17 @@ const MobMap = (props) => {
       onHide={modalExitHandle}
     >
       <Modal.Header closeButton xs={4}>
-        {props.mob.npc_name} lvl.{props.mob.npc_level}
+        <p className="align-self-end">
+          {props.mob.npc_name} - lvl.{props.mob.npc_level}
+        </p>
+        <Button
+          variant="info"
+          className="m-2"
+          id={props.mob.npc_id}
+          onClick={onInfoBtnClick}
+        >
+          Show NPC Info
+        </Button>
       </Modal.Header>
       <Modal.Body className="text-align-center">
         {spawns.length !== 0 ? (

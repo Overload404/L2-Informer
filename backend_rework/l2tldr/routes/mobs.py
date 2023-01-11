@@ -21,6 +21,9 @@ def getmobs():
     offset = page*limit
     level_min = None if "levelmin" not in request.args or request.args.get("levelmin")=="" else request.args.get("levelmin")
     level_max = None if "levelmax" not in request.args or request.args.get("levelmax")=="" else request.args.get("levelmax")
+    isundead = None if "isundead" not in request.args or request.args.get("isundead")=="" else request.args.get("isundead")
+    notonmap = None if "notonmap" not in request.args or request.args.get("notonmap")=="" else request.args.get("notonmap")
+
 
     # build query based on params
     query = "SELECT * FROM mobsnpcid" 
@@ -28,6 +31,8 @@ def getmobs():
         query+= f" INNER JOIN npcskills ON mobsnpcid.NPC_ID = npcskills.NPC_ID"
     if mobtype!=None:
         query += f" WHERE TYPE IN ({mobtype})"
+    if notonmap==None:
+        query += f"AND (exists (select 1 from mobsspawnlist where mobsnpcid.npc_id = mobsspawnlist.npc_templa) or EXISTS (select 1 from raidspawn where mobsnpcid.npc_id = raidspawn.boss_id ))"
     if name!=None:
         query += f" AND LOWER(NPC_NAME) LIKE LOWER('%{name}%')"
     if weakpoint!=None:
@@ -36,15 +41,21 @@ def getmobs():
         query += f" AND (npc_level >= {level_min})"
     if level_max!=None:
         query += f" AND (npc_level <= {level_max})"
-    
+    if isundead == "1":
+        query += f" AND (isundead = 1)"
+
     if page!=None:
         query += f" LIMIT {limit} OFFSET {offset}"
 
     print(query)
     
-    total_rows_query = "SELECT COUNT('id') FROM mobsnpcid INNER JOIN npcskills ON mobsnpcid.NPC_ID = npcskills.NPC_ID" 
+    total_rows_query = "SELECT COUNT('id') FROM mobsnpcid" 
+    if weakpoint!=None:
+        total_rows_query+= f" INNER JOIN npcskills ON mobsnpcid.NPC_ID = npcskills.NPC_ID"
     if mobtype!=None:
         total_rows_query += f" WHERE TYPE IN ({mobtype})"
+    if notonmap==None:
+        total_rows_query += f"AND (exists (select 1 from mobsspawnlist where mobsnpcid.npc_id = mobsspawnlist.npc_templa) or EXISTS (select 1 from raidspawn where mobsnpcid.npc_id = raidspawn.boss_id ))"
     if name!=None:
         total_rows_query += f" AND LOWER(NPC_NAME) LIKE LOWER('%{name}%')"
     if weakpoint!=None:
@@ -53,6 +64,8 @@ def getmobs():
         total_rows_query += f" AND npc_level >= {level_min}"
     if level_max!=None:
         total_rows_query += f" AND npc_level <= {level_max}"
+    if isundead=="1":
+        total_rows_query += f" AND (isundead = 1)"
     
     # run query
     with conn.cursor() as cur:

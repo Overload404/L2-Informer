@@ -5,7 +5,7 @@ import MobTab from "./components/npcs/MobTab";
 
 function App() {
   return (
-    <Container className="bg-dark text-light rounded border">
+    <Container className="min-vh-100 bg-dark text-light rounded border">
       <h1 className="col-12 bg-dark">
         <img
           src="./l2tldr-logo-dark-theme.png"

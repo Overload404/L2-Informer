@@ -10,6 +10,7 @@ import linkBuilder from "../routes/routes";
 import Form from "react-bootstrap/Form";
 import WeakpointBar from "./WeakpointBar";
 import LevelBar from "./LevelBar";
+import AdditionalBar from "./AdditionalBar";
 
 function MobTab() {
   const [mobs, setMobs] = useState([]);
@@ -20,6 +21,8 @@ function MobTab() {
   const [mobType, setMobType] = useState(mobTypes.all);
   const [levelmin, setLevelMin] = useState("");
   const [levelmax, setLevelMax] = useState("");
+  const [isUndead, setIsUndead] = useState("");
+  const [notOnMap, setNotOnMap] = useState("");
 
   const fetchMobList = () => {
     fetch(
@@ -31,6 +34,8 @@ function MobTab() {
         name: name,
         levelmin: levelmin,
         levelmax: levelmax,
+        isundead: isUndead,
+        notonmap: notOnMap,
       })
     )
       .then((response) => {
@@ -53,6 +58,8 @@ function MobTab() {
         name: name,
         levelmin: levelmin,
         levelmax: levelmax,
+        isundead: isUndead,
+        notonmap: notOnMap,
       })
     )
       .then((response) => {
@@ -67,7 +74,7 @@ function MobTab() {
   useEffect(() => {
     setMobListPage(1);
     fetchMobList();
-  }, [mobType, weakpoint, name, levelmax, levelmin]);
+  }, [mobType, weakpoint, name, levelmax, levelmin, isUndead, notOnMap]);
 
   const AllNPCsHandler = () => {
     setMobType(mobTypes.all);
@@ -120,12 +127,17 @@ function MobTab() {
               </Button>
             </ButtonGroup>
           </Col>
-          <WeakpointBar onWeakpointSelect={handleWeakpointBar} />
+          <WeakpointBar
+            setIsUndead={setIsUndead}
+            onWeakpointSelect={handleWeakpointBar}
+          />
           <LevelBar
             onLevelMinChange={setLevelMin}
             onLevelMaxChange={setLevelMax}
           />
+          <AdditionalBar setNotOnMap={setNotOnMap} />
         </Row>
+
         <Form onSubmit={preventDefault} className="bg-dark rounded p-1">
           <Row>
             <Col xs={12}>

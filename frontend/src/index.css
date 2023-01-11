@@ -16,3 +16,20 @@ code {
 .map {
   height: 32rem !important;
 }
+
+.skill-list {
+  height: 22rem !important;
+  overflow: auto;
+}
+
+.justify-self-center {
+  justify-self: center;
+}
+
+.justify-self-start {
+  justify-self: start;
+}
+
+.justify-self-end {
+  justify-self: end;
+}
