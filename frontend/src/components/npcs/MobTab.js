@@ -11,6 +11,8 @@ import Form from "react-bootstrap/Form";
 import WeakpointBar from "./WeakpointBar";
 import LevelBar from "./LevelBar";
 import AdditionalBar from "./AdditionalBar";
+import DropdownButton from "react-bootstrap/DropdownButton";
+import Dropdown from "react-bootstrap/Dropdown"
 
 function MobTab() {
   const [mobs, setMobs] = useState([]);
@@ -127,10 +129,11 @@ function MobTab() {
               </Button>
             </ButtonGroup>
           </Col>
-          <WeakpointBar
+            <WeakpointBar
             setIsUndead={setIsUndead}
             onWeakpointSelect={handleWeakpointBar}
           />
+          
           <LevelBar
             onLevelMinChange={setLevelMin}
             onLevelMaxChange={setLevelMax}

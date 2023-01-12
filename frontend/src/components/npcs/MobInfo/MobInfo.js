@@ -154,7 +154,7 @@ const MobInfo = (props) => {
                     <span className="text-danger"> Agressive </span>
                   )}
                 </p>
-                <p>Faction:{props.faction_id}</p>
+                <p>Faction:{props.mob.faction_id}</p>
               </Col>
             </Row>
           </Col>
