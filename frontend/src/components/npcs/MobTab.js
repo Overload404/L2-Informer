@@ -109,8 +109,8 @@ function MobTab() {
 
   return (
     <Col className="container col-12">
-      <div className="sticky-top">
-        <Row className="p-2 justify-content-start text-center bg-dark">
+      <div className="sticky-top border-bottom">
+        <Row className="p-2 justify-content-start text-center bg-dark ">
           <Col xs="auto" lg="3" md="auto" className="dark pb-1">
             <h5 className="m-2 justify-content-start">Type</h5>
             <ButtonGroup>
@@ -138,9 +138,7 @@ function MobTab() {
             onLevelMaxChange={setLevelMax}
           />
           <AdditionalBar setNotOnMap={setNotOnMap} />
-        </Row>
-
-        <Form onSubmit={preventDefault} className="bg-dark rounded p-1">
+          <Form onSubmit={preventDefault} className="bg-dark rounded p-1">
           <Row>
             <Col xs={12}>
               <Form.Control
@@ -153,6 +151,7 @@ function MobTab() {
             </Col>
           </Row>
         </Form>
+        </Row>
       </div>
       <InfiniteScroll
         dataLength={mobs.length}
