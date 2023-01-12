@@ -23,6 +23,10 @@ def getmobs():
     level_max = None if "levelmax" not in request.args or request.args.get("levelmax")=="" else request.args.get("levelmax")
     isundead = None if "isundead" not in request.args or request.args.get("isundead")=="" else request.args.get("isundead")
     notonmap = None if "notonmap" not in request.args or request.args.get("notonmap")=="" else request.args.get("notonmap")
+    namesort = None if "namesort" not in request.args or request.args.get("namesort")=="" else request.args.get("namesort")
+    levelsort = None if "levelsort" not in request.args or request.args.get("levelsort")=="" else request.args.get("levelsort")
+    expsort = None if "expsort" not in request.args or request.args.get("expsort")=="" else request.args.get("expsort")
+    print(type(namesort))
 
 
     # build query based on params
@@ -43,6 +47,31 @@ def getmobs():
         query += f" AND (npc_level <= {level_max})"
     if isundead == "1":
         query += f" AND (isundead = 1)"
+
+
+    if namesort != None or levelsort != None or expsort != None:
+        query+= f" ORDER BY "
+
+    if namesort == "1":
+        query += f" npc_name ASC"
+    if namesort == "2":
+        query += f" npc_name DESC"
+    
+    if (namesort !=None and levelsort != None) or (namesort != None and expsort != None):
+        query += ", "
+    
+    if levelsort == "1":
+        query += f" npc_level ASC"
+    if levelsort == "2":
+        query += f" npc_level DESC"
+
+    if (levelsort != None and expsort != None):
+        query += ", "
+
+    if expsort == "1":
+        query += f" mobsnpcid.exp/mobsnpcid.hp ASC"
+    if expsort == "2":
+        query += f" mobsnpcid.exp/mobsnpcid.hp DESC"
 
     if page!=None:
         query += f" LIMIT {limit} OFFSET {offset}"

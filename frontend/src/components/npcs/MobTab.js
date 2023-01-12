@@ -12,7 +12,6 @@ import WeakpointBar from "./WeakpointBar";
 import LevelBar from "./LevelBar";
 import AdditionalBar from "./AdditionalBar";
 
-
 function MobTab() {
   const [mobs, setMobs] = useState([]);
   const [mobListPage, setMobListPage] = useState(1);
@@ -24,6 +23,9 @@ function MobTab() {
   const [levelmax, setLevelMax] = useState("");
   const [isUndead, setIsUndead] = useState("");
   const [notOnMap, setNotOnMap] = useState("");
+  const [nameSort, setNameSort] = useState(0);
+  const [levelSort, setLevelSort] = useState(0);
+  const [expSort, setExpSort] = useState(0);
 
   const fetchMobList = () => {
     fetch(
@@ -37,6 +39,9 @@ function MobTab() {
         levelmax: levelmax,
         isundead: isUndead,
         notonmap: notOnMap,
+        namesort: nameSort,
+        levelsort: levelSort,
+        expsort: expSort,
       })
     )
       .then((response) => {
@@ -61,6 +66,9 @@ function MobTab() {
         levelmax: levelmax,
         isundead: isUndead,
         notonmap: notOnMap,
+        namesort: nameSort,
+        levelsort: levelSort,
+        expsort: expSort,
       })
     )
       .then((response) => {
@@ -75,7 +83,18 @@ function MobTab() {
   useEffect(() => {
     setMobListPage(1);
     fetchMobList();
-  }, [mobType, weakpoint, name, levelmax, levelmin, isUndead, notOnMap]);
+  }, [
+    mobType,
+    weakpoint,
+    name,
+    levelmax,
+    levelmin,
+    isUndead,
+    notOnMap,
+    nameSort,
+    levelSort,
+    expSort,
+  ]);
 
   const AllNPCsHandler = () => {
     setMobType(mobTypes.all);
@@ -107,6 +126,18 @@ function MobTab() {
     event.preventDefault();
   };
 
+  const sortByName = (event) => {
+    nameSort < 2 ? setNameSort(nameSort + 1) : setNameSort(0);
+  };
+
+  const sortByLevel = (event) => {
+    levelSort < 2 ? setLevelSort(levelSort + 1) : setLevelSort(0);
+  };
+
+  const sortByExp = (event) => {
+    expSort < 2 ? setExpSort(expSort + 1) : setExpSort(0);
+  };
+
   return (
     <Col className="container col-12">
       <div className="sticky-top border-bottom">
@@ -128,29 +159,65 @@ function MobTab() {
               </Button>
             </ButtonGroup>
           </Col>
-            <WeakpointBar
+          <WeakpointBar
             setIsUndead={setIsUndead}
             onWeakpointSelect={handleWeakpointBar}
           />
-          
+
           <LevelBar
             onLevelMinChange={setLevelMin}
             onLevelMaxChange={setLevelMax}
           />
           <AdditionalBar setNotOnMap={setNotOnMap} />
           <Form onSubmit={preventDefault} className="bg-dark rounded p-1">
-          <Row>
-            <Col xs={12}>
-              <Form.Control
-                size="lg"
-                as="input"
-                type="text"
-                placeholder="Search..."
-                onChange={handleSearchByName}
-              />
-            </Col>
-          </Row>
-        </Form>
+            <Row>
+              <Col xs={12}>
+                <Form.Control
+                  size="lg"
+                  as="input"
+                  type="text"
+                  placeholder="Search..."
+                  onChange={handleSearchByName}
+                />
+              </Col>
+            </Row>
+          </Form>
+        </Row>
+        <Row className="d-flex">
+          <Col>
+            <span> </span>
+            <Button onClick={sortByName} className="col-md-4 col-sm-12">
+              Name
+              {nameSort === 1 ? (
+                <i className="bi bi-sort-up"></i>
+              ) : nameSort === 2 ? (
+                <i className="bi bi-sort-down"></i>
+              ) : (
+                ""
+              )}
+            </Button>
+            <Button onClick={sortByLevel} className="col-md-4 col-sm-12">
+              Level
+              {levelSort === 1 ? (
+                <i className="bi bi-sort-up"></i>
+              ) : levelSort === 2 ? (
+                <i className="bi bi-sort-down"></i>
+              ) : (
+                ""
+              )}
+            </Button>
+
+            <Button onClick={sortByExp} className="col-md-4 col-sm-12">
+              EXP Efficiency
+              {expSort === 1 ? (
+                <i className="bi bi-sort-up"></i>
+              ) : expSort === 2 ? (
+                <i className="bi bi-sort-down"></i>
+              ) : (
+                ""
+              )}
+            </Button>
+          </Col>
         </Row>
       </div>
       <InfiniteScroll
