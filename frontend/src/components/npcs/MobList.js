@@ -7,7 +7,7 @@ import { useState } from "react";
 import Container from "react-bootstrap/esm/Container";
 import MobMap from "./MobInfo/MobMap";
 import linkBuilder from "../routes/routes";
-import Stack from "react-bootstrap/Stack";
+
 const MobTable = (props) => {
   const [drop, setDrop] = useState([{ name: "Nothing" }]);
   const [spoil, setSpoil] = useState([]);
