@@ -68,9 +68,9 @@ def getmobs():
         query += ", "
 
     if expsort == "1":
-        query += f" mobsnpcid.exp/mobsnpcid.hp ASC"
-    if expsort == "2":
         query += f" mobsnpcid.exp/mobsnpcid.hp DESC"
+    if expsort == "2":
+        query += f" mobsnpcid.exp/mobsnpcid.hp ASC"
 
     if page!=None:
         query += f" LIMIT {limit} OFFSET {offset}"
@@ -92,6 +92,8 @@ def getmobs():
         total_rows_query += f" AND npc_level <= {level_max}"
     if isundead=="1":
         total_rows_query += f" AND (isundead = 1)"
+    
+    print(query)
     
     # run query
     with conn.cursor() as cur:

@@ -184,10 +184,9 @@ function MobTab() {
           </Form>
         </Row>
         <Row className="d-flex">
-          <Col>
-            <span> </span>
+          <Col className="btn-group">
             <Button onClick={sortByName} className="col-md-4 col-sm-12">
-              Name
+              Name {""}
               {nameSort === 1 ? (
                 <i className="bi bi-sort-up"></i>
               ) : nameSort === 2 ? (
@@ -197,7 +196,7 @@ function MobTab() {
               )}
             </Button>
             <Button onClick={sortByLevel} className="col-md-4 col-sm-12">
-              Level
+              Level {""}
               {levelSort === 1 ? (
                 <i className="bi bi-sort-up"></i>
               ) : levelSort === 2 ? (
@@ -208,7 +207,7 @@ function MobTab() {
             </Button>
 
             <Button onClick={sortByExp} className="col-md-4 col-sm-12">
-              EXP Efficiency
+              EXP Efficiency {""}
               {expSort === 1 ? (
                 <i className="bi bi-sort-up"></i>
               ) : expSort === 2 ? (
