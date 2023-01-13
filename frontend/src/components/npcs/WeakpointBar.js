@@ -20,7 +20,7 @@ function WeakpointBar(props) {
   };
 
   return (
-    <Col xs="auto" lg="3" md="auto" className="pb-1">
+    <Col lg="6" xl="3" md="6" sm="12" className="pb-1">
       <h5 className="m-2">Weak Point</h5>
       <Row className="w-100">
         <Col xs="auto" lg="6">

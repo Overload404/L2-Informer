@@ -26,7 +26,6 @@ def getmobs():
     namesort = None if "namesort" not in request.args or request.args.get("namesort")=="" else request.args.get("namesort")
     levelsort = None if "levelsort" not in request.args or request.args.get("levelsort")=="" else request.args.get("levelsort")
     expsort = None if "expsort" not in request.args or request.args.get("expsort")=="" else request.args.get("expsort")
-    print(type(namesort))
 
 
     # build query based on params
@@ -75,8 +74,6 @@ def getmobs():
 
     if page!=None:
         query += f" LIMIT {limit} OFFSET {offset}"
-
-    print(query)
     
     total_rows_query = "SELECT COUNT('id') FROM mobsnpcid" 
     if weakpoint!=None:

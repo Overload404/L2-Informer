@@ -11,7 +11,7 @@ function LevelBar(props) {
   };
 
   return (
-    <Col xs="auto" lg="3" md="auto" className="pb-1">
+    <Col lg="6" xl="3" md="6" sm="12" className="pb-1">
       <h5 className="m-2">Level</h5>
       <ReactSlider
         className="custom-slider"

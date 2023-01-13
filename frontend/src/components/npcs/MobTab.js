@@ -142,7 +142,7 @@ function MobTab() {
     <Col className="container col-12">
       <div className="sticky-top border-bottom">
         <Row className="p-2 justify-content-start text-center bg-dark ">
-          <Col xs="auto" lg="3" md="auto" className="dark pb-1">
+          <Col lg="6" xl="3" md="6" sm="12" className="dark pb-1">
             <h5 className="m-2 justify-content-start">Type</h5>
             <ButtonGroup>
               <Button onClick={AllNPCsHandler} variant="primary">
